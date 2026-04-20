@@ -1,0 +1,1380 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head><script type="text/javascript" src="/___vscode_livepreview_injected_script"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Our Work</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  /* Modern Dark Palette */
+  --accent: #82ff00; /* Premium Cyan */
+  --accent-dark: #0099AA;
+  --bg: #030305;
+  --bg2: #08080C;
+  --bg3: #0D0D12;
+  --bg4: #15151A;
+  
+  --text: #F8F9FA;
+  --text2: #A0AAB2;
+  --text3: #5C677D;
+  
+  /* Glass & Skeuo Borders */
+  --border: rgba(255, 255, 255, 0.06);
+  --border2: rgba(255, 255, 255, 0.12);
+  --glass-bg: rgba(8, 8, 12, 0.6);
+}
+
+html { scroll-behavior: smooth; }
+body { 
+  background: #030305; 
+  color: var(--text); 
+  font-family: 'Inter', sans-serif; 
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  cursor: none; /* Hide default cursor */
+}
+
+/* ── CUSTOM CURSOR ─────────────────────────────── */
+#custom-cursor {
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: transform 0.08s ease-out;
+  box-shadow: 0 0 15px rgba(255,255,255,1);
+}
+button, a, .skeuo-btn { cursor: none !important; }
+
+/* Hide custom cursor on touch devices */
+@media (pointer: coarse) {
+  #custom-cursor { display: none !important; }
+  body { cursor: auto; }
+}
+
+/* ── UTILITIES ─────────────────────────────── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+}
+
+.skeuo-btn {
+  background: var(--bg3);
+  box-shadow: 
+    4px 4px 10px rgba(0,0,0,0.8), 
+    -2px -2px 6px rgba(255,255,255,0.02),
+    inset 1px 1px 1px rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.skeuo-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    6px 6px 15px rgba(0,0,0,0.9), 
+    -2px -2px 8px rgba(255,255,255,0.03),
+    inset 1px 1px 2px rgba(0, 229, 255, 0.3);
+  border-color: var(--accent);
+}
+
+/* ── NAVBAR ─────────────────────────────── */
+nav {
+  position: sticky; top: 0; z-index: 1000;
+  height: 72px; padding: 0 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(3, 3, 5, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  font-family: 'Outfit', sans-serif;
+  font-size: 24px; font-weight: 700; letter-spacing: -0.5px;
+  color: var(--text); text-decoration: none;
+  display: flex; align-items: center; gap: 10px;
+}
+.logo-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1; transform:scale(1)} 50%{opacity:0.6; transform:scale(0.85)} }
+
+/* Desktop Nav */
+.nav-desktop { display: flex; align-items: center; gap: 40px; }
+.nav-desktop a { color: var(--text2); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s; }
+.nav-desktop a:hover { color: var(--accent); }
+
+/* Mobile Hamburger */
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 8px; }
+.hamburger span { display: block; width: 24px; height: 2px; background: var(--text); transition: all 0.3s; transform-origin: center; }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--accent); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--accent); }
+
+.nav-menu {
+  display: none; position: absolute; top: 72px; left: 0; right: 0;
+  background: rgba(3, 3, 5, 0.98); backdrop-filter: blur(30px);
+  border-bottom: 1px solid var(--border);
+  padding: 2rem 5%; flex-direction: column; gap: 0;
+}
+.nav-menu.open { display: flex; animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes slideDown { from{opacity:0; transform:translateY(-20px)} to{opacity:1; transform:translateY(0)} }
+.nav-menu a {
+  color: var(--text2); text-decoration: none; font-size: 13px; font-weight: 500;
+  letter-spacing: 1px; text-transform: uppercase; padding: 16px 0;
+  border-bottom: 1px solid var(--border); transition: color 0.3s;
+}
+.nav-menu a:hover { color: var(--accent); }
+.nav-menu a:last-child { border-bottom: none; }
+
+@media(max-width:768px) {
+  .nav-desktop { display: none; }
+  .hamburger { display: flex; }
+  .nav-menu { display: none; flex-direction: column; }
+  .nav-menu.open { display: flex; }
+}
+
+@media(min-width:769px) {
+  .hamburger { display: none !important; }
+  .nav-desktop { display: flex; }
+  .nav-menu { display: none !important; }
+}
+
+/* ── HERO ─────────────────────────────── */
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; overflow: hidden;
+}
+#global-orbit-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--bg);
+}
+.hero-content { position: relative; z-index: 2; max-width: 860px; padding: 0 5%; }
+.hero-slide-1 { background-image: url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1600'); }
+.hero-slide-2 { background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=1600'); }
+.hero-slide-3 { background-image: url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600'); }
+.hero-slide-4 { background-image: url('https://images.unsplash.com/photo-1531058020387-3be344556be6?w=1600'); }
+
+.hero-content { position: relative; z-index: 2; max-width: 860px; padding: 0 5%; }
+.hero-eyebrow {
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 2rem; font-weight: 600;
+  display: flex; align-items: center; gap: 12px; justify-content: center;
+}
+.hero-eyebrow::before, .hero-eyebrow::after { content: ''; width: 40px; height: 1px; background: var(--accent); opacity: 0.5; }
+.hero-quote {
+  font-family: 'Outfit', sans-serif; font-size: clamp(40px, 6vw, 80px);
+  line-height: 1.1; font-weight: 700; color: var(--text); margin-bottom: 1.5rem; letter-spacing: -1px;
+}
+.hero-quote em { color: transparent; -webkit-text-stroke: 1px var(--accent); font-style: normal; position: relative; }
+.hero-sub { font-size: 16px; color: var(--text2); line-height: 1.7; margin-bottom: 3rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: var(--accent); color: var(--bg);
+  font-size: 12px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700;
+  padding: 16px 36px; text-decoration: none; border-radius: 4px;
+  transition: all 0.3s ease; box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+}
+.hero-cta:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0, 229, 255, 0.4); }
+
+.sponsors { position: absolute; bottom: 3rem; left: 0; right: 0; z-index: 2; text-align: center; }
+.sponsors-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 1rem; }
+.sponsor-logos { display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; padding: 0 5%; }
+.sponsor-logo { font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 1px; color: var(--text3); transition: color 0.3s; }
+.sponsor-logo:hover { color: var(--text); }
+
+@media(max-width:768px) {
+  .sponsors { display: none; }
+}
+
+.slide-dots { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 3; }
+.slide-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text3); transition: all 0.3s; cursor: pointer; }
+.slide-dot.active { width: 24px; border-radius: 4px; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+
+/* ── SECTIONS SHARED ─────────────────────────────── */
+section { padding: 120px 5%; position: relative; background: transparent; }
+@media(max-width:768px) { section { padding: 80px 5%; } }
+.section-eyebrow {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1rem; font-weight: 600;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-eyebrow::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--accent); opacity: 0.5; }
+.section-title { font-family: 'Outfit', sans-serif; font-size: clamp(32px, 4vw, 52px); font-weight: 700; line-height: 1.15; margin-bottom: 1.5rem; letter-spacing: -0.5px; }
+.section-sub { font-size: 16px; color: var(--text2); line-height: 1.8; max-width: 520px; }
+
+/* ── ABOUT ─────────────────────────────── */
+#about { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+@media(max-width:768px){ #about { grid-template-columns: 1fr; gap: 40px; } }
+.about-img-wrap { position: relative; padding: 20px; }
+.about-img {
+  width: 100%; aspect-ratio: 3/4; background: var(--bg3);
+  background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800');
+  background-size: cover; background-position: center;
+  border-radius: 8px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+.about-img::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 100px; height: 100px; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent);
+  border-radius: 8px 0 0 0;
+}
+.about-img::after {
+  content: ''; position: absolute; bottom: 0; right: 0;
+  width: 100px; height: 100px; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent);
+  border-radius: 0 0 8px 0;
+}
+.about-text .section-sub { max-width: 100%; }
+.about-divider { width: 40px; height: 2px; background: var(--accent); margin: 2rem 0; box-shadow: 0 0 10px var(--accent); }
+
+/* ── STATS ─────────────────────────────── */
+#stats { padding: 80px 5%; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: var(--border); border-radius: 8px; overflow: hidden; }
+.stat-item {
+  background: var(--bg2); padding: 48px 32px; text-align: center;
+  position: relative; overflow: hidden; transition: background 0.3s;
+}
+.stat-item:hover { background: var(--bg3); }
+.stat-item::before {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 2px; background: var(--accent);
+  transform: scaleX(0); transition: transform 0.5s ease;
+}
+.stat-item:hover::before { transform: scaleX(1); }
+.stat-num { font-family: 'Outfit', sans-serif; font-size: 56px; font-weight: 700; color: var(--text); line-height: 1; margin-bottom: 8px; }
+.stat-label { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+
+/* ── WORKS ─────────────────────────────── */
+#works { }
+.works-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 60px; flex-wrap: wrap; gap: 24px; }
+.works-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+.work-card {
+  position: relative; overflow: hidden; background: var(--bg3); aspect-ratio: 4/5;
+  border-radius: 8px; cursor: pointer; border: 1px solid var(--border);
+}
+.work-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.work-card::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(3,3,5,0.95) 0%, transparent 60%);
+}
+.work-card:hover img { opacity: 1; transform: scale(1.08); }
+.work-card-info { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; padding: 32px; transform: translateY(10px); transition: transform 0.4s ease; }
+.work-card:hover .work-card-info { transform: translateY(0); }
+.work-tag { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.work-card-title { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 600; color: var(--text); }
+.work-card-dropdown { 
+  max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  padding-top: 0; opacity: 0; transition: opacity 0.4s ease, max-height 0.4s ease, padding-top 0.4s ease;
+}
+.work-card:hover .work-card-dropdown { 
+  max-height: 100px; opacity: 1; padding-top: 16px; 
+}
+.work-card-insta { font-size: 13px; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+.work-card-insta a { color: var(--accent); text-decoration: none; transition: color 0.3s; }
+.work-card-insta a:hover { color: #fff; }
+
+.work-quote {
+  margin-top: 80px; text-align: center; font-family: 'Outfit', sans-serif; font-weight: 300;
+  font-size: clamp(24px, 3vw, 36px); color: var(--text); max-width: 800px; margin-left: auto; margin-right: auto;
+  position: relative; padding: 0 40px; line-height: 1.4;
+}
+
+/* ── SERVICES ─────────────────────────────── */
+#services { position: relative; }
+.services-header { text-align: center; margin-bottom: 60px; }
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+.service-card {
+  position: relative; overflow: hidden; background: var(--bg3); border-radius: 12px;
+  border: 1px solid var(--border); transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  cursor: pointer ;
+}
+.service-card:hover { border-color: var(--accent); transform: translateY(-16px) scale(1.05); box-shadow: 0 30px 60px rgba(0, 229, 255, 0.25); }
+.service-img {
+  width: 100%; height: 200px; object-fit: cover; opacity: 0.6;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.service-card:hover .service-img { opacity: 1; transform: scale(1.05); }
+.service-content { padding: 28px; }
+.service-icon {
+  width: 48px; height: 48px; border-radius: 8px; background: rgba(0, 229, 255, 0.1);
+  border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+  color: var(--accent); margin-bottom: 16px; font-size: 24px; transition: all 0.3s;
+}
+.service-card:hover .service-icon { background: var(--accent); color: var(--bg); transform: scale(1.1); }
+.service-title { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+.service-desc { font-size: 14px; color: var(--text2); line-height: 1.6; margin-bottom: 16px; }
+.service-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--accent); text-decoration: none; transition: gap 0.3s; }
+.service-card:hover .service-link { gap: 14px; }
+
+/* ── PROGRAMS (Icons updated to SVG) ─────────────────────────────── */
+#programs { overflow: hidden; }
+.programs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 60px; }
+.program-card {
+  padding: 48px 36px; position: relative; overflow: hidden; border-radius: 8px;
+  cursor: pointer; background: var(--bg3); border: 1px solid var(--border);
+}
+.program-card:hover { border-color: var(--border2); }
+.program-icon {
+  width: 56px; height: 56px; margin-bottom: 28px; border-radius: 12px;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent); transition: all 0.4s;
+}
+.program-card:hover .program-icon { background: var(--accent); color: var(--bg); box-shadow: 0 10px 20px rgba(0, 229, 255, 0.2); transform: scale(1.1); }
+.program-icon svg { width: 24px; height: 24px; fill: currentColor; }
+
+.program-card-title { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 600; margin-bottom: 16px; }
+.program-card-desc { font-size: 14px; color: var(--text2); line-height: 1.8; margin-bottom: 24px; }
+.program-features { list-style: none; margin-bottom: 28px; }
+.program-features li { font-size: 13px; color: var(--text2); padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.program-features li::before { content: '✓'; color: var(--accent); font-weight: bold; }
+.program-features li:last-child { border-bottom: none; }
+.program-link { font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: gap 0.3s; }
+.program-card:hover .program-link { gap: 14px; }
+
+/* ── PRICING ─────────────────────────────── */
+#pricing { }
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 60px; }
+.pricing-card { padding: 52px 40px; border-radius: 12px; position: relative; overflow: hidden; background: var(--bg3); border: 1px solid var(--border); }
+.pricing-card.featured { background: var(--bg4); border-color: var(--border2); }
+.pricing-card.featured::before {
+  content: 'MOST POPULAR'; position: absolute; top: 16px; right: -30px;
+  background: var(--accent); color: var(--bg); font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; padding: 6px 30px; transform: rotate(45deg);
+}
+.pricing-tier { font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.pricing-price { font-family: 'Outfit', sans-serif; font-size: 56px; font-weight: 700; color: var(--text); line-height: 1; margin-bottom: 8px; }
+.pricing-price sup { font-size: 24px; vertical-align: top; margin-top: 12px; margin-right: 4px; color: var(--text3); }
+.pricing-price-period { font-size: 13px; color: var(--text3); margin-bottom: 36px; }
+.pricing-divider { height: 1px; background: var(--border); margin-bottom: 32px; }
+.pricing-features { list-style: none; margin-bottom: 40px; }
+.pricing-features li { font-size: 14px; color: var(--text2); padding: 12px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+.pricing-features li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; box-shadow: 0 0 8px var(--accent); }
+.pricing-features li.disabled { color: var(--text3); }
+.pricing-features li.disabled::before { background: var(--bg4); box-shadow: none; border: 1px solid var(--text3); }
+.pricing-features li:last-child { border-bottom: none; }
+.pricing-btn {
+  display: block; width: 100%; padding: 16px; text-align: center;
+  font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  text-decoration: none; transition: all 0.3s; cursor: pointer; border-radius: 6px; font-family: 'Inter', sans-serif;
+}
+.pricing-btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border2); }
+.pricing-btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+.pricing-btn-filled { background: var(--accent); color: var(--bg); border: none; }
+.pricing-btn-filled:hover { background: #fff; box-shadow: 0 5px 15px rgba(0, 229, 255, 0.3); }
+
+/* ── TESTIMONIALS ─────────────────────────────── */
+#testimonials { padding: 120px 0; overflow: hidden; }
+.test-header { padding: 0 5%; margin-bottom: 60px; }
+.test-track-wrap { overflow: hidden; mask: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); -webkit-mask: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); }
+.test-track { display: flex; gap: 24px; animation: scroll-left 40s linear infinite; width: max-content; }
+.test-track:hover { animation-play-state: paused; }
+@keyframes scroll-left { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.test-card {
+  background: rgba(255,255,255,0.02); backdrop-filter: blur(10px);
+  border: 1px solid var(--border); border-radius: 12px;
+  padding: 40px; width: 400px; flex-shrink: 0; position: relative;
+}
+.test-stars { display: flex; gap: 4px; margin-bottom: 20px; color: var(--accent); font-size: 16px; }
+.test-body { font-size: 15px; color: var(--text2); line-height: 1.8; margin-bottom: 30px; font-weight: 400; }
+.test-author { display: flex; align-items: center; gap: 16px; }
+.test-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--bg4); border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--text); }
+.test-name { font-size: 15px; font-weight: 600; color: var(--text); }
+.test-role { font-size: 12px; color: var(--text3); margin-top: 2px; }
+
+/* ── FOOTER ─────────────────────────────── */
+footer { background: var(--bg); border-top: 1px solid var(--border); padding: 100px 5% 40px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1.5fr 1fr; gap: 60px; margin-bottom: 80px; }
+@media(max-width:900px){ .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:540px){ .footer-grid { grid-template-columns: 1fr; padding: 0; } }
+.footer-brand .logo { display: inline-flex; margin-bottom: 24px; }
+.footer-desc { font-size: 14px; color: var(--text2); line-height: 1.8; margin-bottom: 32px; max-width: 320px; }
+.footer-social { display: flex; gap: 12px; }
+.social-btn {
+  width: 40px; height: 40px; border-radius: 8px; background: var(--bg3);
+  border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+  color: var(--text2); text-decoration: none; transition: all 0.3s;
+}
+.social-btn svg { width: 18px; height: 18px; fill: currentColor; }
+.social-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+
+.footer-col h4 { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text); margin-bottom: 24px; }
+.footer-col a { display: block; font-size: 14px; color: var(--text2); text-decoration: none; margin-bottom: 16px; transition: color 0.2s; }
+.footer-col a:hover { color: var(--accent); }
+
+/* Instagram Managed Pages Section */
+.ig-page-link {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+  padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border); text-decoration: none; transition: all 0.3s;
+}
+.ig-page-link:hover { border-color: var(--accent); background: rgba(0, 229, 255, 0.05); transform: translateX(5px); }
+.ig-page-link svg { width: 20px; height: 20px; fill: var(--text); }
+.ig-page-link:hover svg { fill: var(--accent); }
+.ig-info { display: flex; flex-direction: column; flex: 1; }
+.ig-handle { font-size: 13px; font-weight: 600; color: var(--text); }
+.ig-followers { font-size: 11px; color: var(--text3); }
+.ig-view-btn {
+  background: var(--accent); color: var(--bg); border: none; border-radius: 6px;
+  padding: 6px 12px; font-size: 11px; font-weight: 600; cursor: pointer;
+  transition: all 0.3s; text-decoration: none; display: inline-block;
+}
+.ig-view-btn:hover { background: #fff; transform: scale(1.05); }
+
+.footer-map { margin-top: 60px; border-top: 1px solid var(--border); padding-top: 60px; }
+.footer-map-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+@media(max-width:768px){ .footer-map-inner { grid-template-columns: 1fr; } }
+.footer-map iframe { width: 100%; height: 320px; border-radius: 12px; border: 1px solid var(--border); filter: invert(100%) hue-rotate(180deg) brightness(0.8) contrast(1.2); }
+.footer-contact h4 { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text); margin-bottom: 24px; }
+.contact-line { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
+.contact-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); width: 70px; flex-shrink: 0; padding-top: 2px; }
+.contact-val { font-size: 14px; color: var(--text2); line-height: 1.6; }
+.footer-bottom { margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-copy { font-size: 13px; color: var(--text3); }
+.footer-legal { display: flex; gap: 24px; }
+.footer-legal a { font-size: 13px; color: var(--text3); text-decoration: none; transition: color 0.2s; }
+.footer-legal a:hover { color: var(--text); }
+
+/* ── CANVAS CTA SECTION ─────────────────────────────── */
+#canvas-cta {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 120px 5%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+#canvas-cta .cta-inner {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+#canvas-cta .cta-text {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 40px;
+}
+#canvas-cta .cta-btn-wrap {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+}
+.canvas-cta-btn {
+  font-family: 'Hind Guntur', 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--bg);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  background: var(--accent);
+  padding: 20px 44px 14px;
+  cursor: pointer;
+  border: 0;
+  border-radius: 4px;
+  min-width: 200px;
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.canvas-cta-btn span {
+  display: block;
+  position: relative;
+  z-index: 10;
+}
+.canvas-cta-btn::after,
+.canvas-cta-btn::before {
+  padding: 20px 0 14px;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: calc(-100% - 30px);
+  height: calc(100% - 34px);
+  width: calc(100% + 20px);
+  border-radius: 4px;
+  transform: skew(-25deg);
+}
+.canvas-cta-btn::after {
+  background: #fff;
+  transition: left 0.8s cubic-bezier(0.86, 0, 0.07, 1) 0.2s;
+  z-index: 0;
+  opacity: 0.25;
+}
+.canvas-cta-btn::before {
+  background: rgba(0,0,0,0.25);
+  z-index: 5;
+  transition: left 1s cubic-bezier(0.86, 0, 0.07, 1);
+}
+.canvas-cta-btn:hover::after {
+  left: calc(0% - 10px);
+  transition: left 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+}
+.canvas-cta-btn:hover::before {
+  left: calc(0% - 10px);
+  transition: left 1s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+/* ── ANIMATIONS ─────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(40px) scale(0.98); transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
+.reveal-left { opacity: 0; transform: translateX(-50px); transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right { opacity: 0; transform: translateX(50px); transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+</style>
+</head>
+<body>
+
+<div id="custom-cursor"></div>
+<canvas id="global-orbit-canvas"></canvas>
+
+<nav>
+  <a href="#" class="logo">
+    <span class="logo-dot"></span>
+    CollabSponser
+  </a>
+  <div class="nav-desktop">
+    <a href="#about">About</a>
+    <a href="#works">Our Works</a>
+    <a href="#services">Services</a>
+    <a href="#programs">Our Programs</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#testimonials">Testimonials</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-menu" id="nav-menu">
+    <a href="#about">About</a>
+    <a href="#works">Our Works</a>
+    <a href="#services">Services</a>
+    <a href="#programs">Our Programs</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#testimonials">Testimonials</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow reveal">Premium Creator Agency</div>
+    <h1 class="hero-quote reveal delay-1">
+      We don't just post<br><em>— we dominate.</em>
+    </h1>
+    <p class="hero-sub reveal delay-2">Crafting digital experiences that move audiences, brands that endure, and content that dominates the algorithm.</p>
+    <a href="#about" class="hero-cta skeuo-btn reveal delay-3">Discover Our Work →</a>
+  </div>
+  <div class="sponsors reveal delay-4">
+    <div class="sponsors-label">Trusted collaborators & sponsors</div>
+    <div class="sponsor-logos">
+      <span class="sponsor-logo">META</span>
+      <span class="sponsor-logo">DISCORD</span>
+      <span class="sponsor-logo">RAZER</span>
+      <span class="sponsor-logo">ADOBE</span>
+      <span class="sponsor-logo">EPIC GAMES</span>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-img-wrap reveal-left">
+    <div class="about-img"></div>
+  </div>
+  <div class="about-text reveal-right">
+    <div class="section-eyebrow">Our Story</div>
+    <h2 class="section-title">Built for the<br>modern algorithm.</h2>
+    <div class="about-divider"></div>
+    <p class="section-sub">CollabSponser is at the intersection of tech and culture — transforming creators into iconic presences. We believe every brand has an extraordinary digital story waiting to be told.</p>
+    <br>
+    <p class="section-sub" style="color:var(--text3)">Our multidisciplinary team of strategists and social engineers brings a rare blend of data analytics and creative courage to every campaign we undertake.</p>
+    <br><br>
+    <a href="#works" class="hero-cta skeuo-btn">View Our Portfolio →</a>
+  </div>
+</section>
+
+<section id="stats">
+  <div style="text-align:center;margin-bottom:60px">
+    <div class="section-eyebrow" style="justify-content:center">By The Numbers</div>
+    <h2 class="section-title" style="text-align:center">Metrics that speak<br><span style="color:var(--accent)">for themselves.</span></h2>
+  </div>
+  <div class="stats-grid glass">
+    <div class="stat-item reveal delay-1">
+      <div class="stat-num" data-target="320">0</div>
+      <div class="stat-label">Campaigns Delivered</div>
+    </div>
+    <div class="stat-item reveal delay-2">
+      <div class="stat-num" data-target="98">0</div>
+      <div class="stat-label">% Engagement Rate</div>
+    </div>
+    <div class="stat-item reveal delay-3">
+      <div class="stat-num" data-target="15">0</div>
+      <div class="stat-label">Million+ Reach</div>
+    </div>
+    <div class="stat-item reveal delay-4">
+      <div class="stat-num" data-target="4">0</div>
+      <div class="stat-label">Managed Pages</div>
+    </div>
+  </div>
+</section>
+
+<section id="works">
+  <div class="works-header">
+    <div class="reveal">
+      <div class="section-eyebrow">Portfolio</div>
+      <h2 class="section-title">Selected works<br>& case studies.</h2>
+    </div>
+    <p class="section-sub reveal delay-1" style="max-width:300px">Each project is a collaboration — a marriage of vision and execution that produces true virality.</p>
+  </div>
+  <div class="works-grid">
+    <div class="work-card skeuo-btn reveal delay-1">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600" alt="Brand Identity">
+      <div class="work-card-info">
+        <div class="work-tag">Sponsorship</div>
+        <div class="work-card-title">Neon Tech Launch</div>
+        <div class="work-card-dropdown">
+          <div class="work-card-insta">Instagram: <a href="https://instagram.com/neontechlaunch" target="_blank">@neontechlaunch</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="work-card skeuo-btn reveal delay-2">
+      <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600" alt="Campaign">
+      <div class="work-card-info">
+        <div class="work-tag">Campaign</div>
+        <div class="work-card-title">Apex Creator Series</div>
+        <div class="work-card-dropdown">
+          <div class="work-card-insta">Instagram: <a href="https://instagram.com/apexcreators" target="_blank">@apexcreators</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="work-card skeuo-btn reveal delay-3">
+      <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600" alt="Digital Experience">
+      <div class="work-card-info">
+        <div class="work-tag">Growth</div>
+        <div class="work-card-title">Audience Architecture</div>
+        <div class="work-card-dropdown">
+          <div class="work-card-insta">Instagram: <a href="https://instagram.com/audiencearch" target="_blank">@audiencearch</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="work-card skeuo-btn reveal delay-4">
+      <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600" alt="Editorial">
+      <div class="work-card-info">
+        <div class="work-tag">Event</div>
+        <div class="work-card-title">Creator Summit</div>
+        <div class="work-card-dropdown">
+          <div class="work-card-insta">Instagram: <a href="https://instagram.com/creatorsummit" target="_blank">@creatorsummit</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="work-quote reveal" style="margin-top:100px">
+    "Great content is not just about how it looks — it is about how it engages the algorithm and moves the community."
+  </div>
+</section>
+
+<section id="services">
+  <div class="services-header reveal">
+    <div class="section-eyebrow" style="justify-content:center">What We Offer</div>
+    <h2 class="section-title">Our Core Services<br><span style="color:var(--accent)">to elevate your brand.</span></h2>
+    <p class="section-sub" style="margin:0 auto;text-align:center;max-width:600px">Comprehensive digital solutions designed to maximize your online presence and drive results.</p>
+  </div>
+  
+  <div class="services-grid">
+    <div class="service-card skeuo-btn reveal delay-1">
+      <img src="https://images.unsplash.com/photo-1460925895917-aeb19be489c7?w=600" alt="SEO Optimization" class="service-img">
+      <div class="service-content">
+        <div class="service-icon">🔍</div>
+        <h3 class="service-title">SEO Optimization</h3>
+        <p class="service-desc">Boost your search rankings and organic visibility with data-driven SEO strategies tailored to your niche.</p>
+        <a href="#" class="service-link">Learn more →</a>
+      </div>
+    </div>
+    
+    <div class="service-card skeuo-btn reveal delay-2">
+      <img src="https://images.unsplash.com/photo-1553531088-c5f8b4acccc8?w=600" alt="Google Business" class="service-img">
+      <div class="service-content">
+        <div class="service-icon">📍</div>
+        <h3 class="service-title">Google Business Profile</h3>
+        <p class="service-desc">Optimize your Google Business Profile to dominate local search results and attract nearby customers.</p>
+        <a href="#" class="service-link">Learn more →</a>
+      </div>
+    </div>
+    
+    <div class="service-card skeuo-btn reveal delay-3">
+      <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600" alt="Website Design" class="service-img">
+      <div class="service-content">
+        <div class="service-icon">🌐</div>
+        <h3 class="service-title">Website Design</h3>
+        <p class="service-desc">Create stunning, conversion-optimized websites that showcase your brand and engage your audience.</p>
+        <a href="#" class="service-link">Learn more →</a>
+      </div>
+    </div>
+    
+    <div class="service-card skeuo-btn reveal delay-4">
+      <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600" alt="Social Media Marketing" class="service-img">
+      <div class="service-content">
+        <div class="service-icon">📱</div>
+        <h3 class="service-title">Social Media Marketing</h3>
+        <p class="service-desc">Grow your followers and engagement across all platforms with strategic content and community management.</p>
+        <a href="#" class="service-link">Learn more →</a>
+      </div>
+    </div>
+    
+    <div class="service-card skeuo-btn reveal delay-5">
+      <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600" alt="Content Creation" class="service-img">
+      <div class="service-content">
+        <div class="service-icon">✨</div>
+        <h3 class="service-title">Content Creation</h3>
+        <p class="service-desc">Professional content production that resonates with your audience and drives viral engagement.</p>
+        <a href="#" class="service-link">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="programs">
+  <div style="text-align:center">
+    <div class="section-eyebrow" style="justify-content:center">What We Offer</div>
+    <h2 class="section-title">Programs built for<br><span style="color:var(--accent)">viral growth.</span></h2>
+    <p class="section-sub" style="margin:0 auto;text-align:center">Tailored engagements designed to scale your digital presence.</p>
+  </div>
+  <div class="programs-grid">
+    <div class="program-card skeuo-btn reveal delay-1">
+      <div class="program-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="program-card-title">Brand Collabs</div>
+      <p class="program-card-desc">End-to-end management of sponsorships connecting creators with top-tier tech brands.</p>
+      <ul class="program-features">
+        <li>Brand outreach strategy</li>
+        <li>Contract negotiation</li>
+        <li>Content integration</li>
+      </ul>
+      <a href="#pricing" class="program-link">Explore program →</a>
+    </div>
+    <div class="program-card skeuo-btn reveal delay-2">
+      <div class="program-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="program-card-title">Audience Growth</div>
+      <p class="program-card-desc">Data-driven strategies to rapidly scale your followers and boost engagement rates.</p>
+      <ul class="program-features">
+        <li>Algorithm optimization</li>
+        <li>Trend forecasting</li>
+        <li>Community management</li>
+      </ul>
+      <a href="#pricing" class="program-link">Explore program →</a>
+    </div>
+    <div class="program-card skeuo-btn reveal delay-3">
+      <div class="program-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="program-card-title">Content Studio</div>
+      <p class="program-card-desc">High-impact content creation across all modern social channels and platforms.</p>
+      <ul class="program-features">
+        <li>Short-form video editing</li>
+        <li>Thumbnail design</li>
+        <li>Multi-channel rollout</li>
+      </ul>
+      <a href="#pricing" class="program-link">Explore program →</a>
+    </div>
+    <div class="program-card skeuo-btn reveal delay-4">
+      <div class="program-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="program-card-title">Network Access</div>
+      <p class="program-card-desc">Direct placement and cross-promotion across our 4 owned, massive Instagram pages.</p>
+      <ul class="program-features">
+        <li>Guaranteed impressions</li>
+        <li>Targeted demographics</li>
+        <li>Story & Feed features</li>
+      </ul>
+      <a href="#pricing" class="program-link">Explore program →</a>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div style="text-align:center">
+    <div class="section-eyebrow" style="justify-content:center">Investment</div>
+    <h2 class="section-title">Transparent pricing<br>for every creator.</h2>
+    <p class="section-sub" style="margin:0 auto;text-align:center">Choose the level of engagement that matches your channel's scale.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card skeuo-btn reveal delay-1">
+      <div class="pricing-tier">Starter</div>
+      <div class="pricing-price"><sup>$</sup>499</div>
+      <div class="pricing-price-period">per month</div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>Channel audit & report</li>
+        <li>1 Brand pitch per month</li>
+        <li>Discord community access</li>
+        <li class="disabled">Custom thumbnail design</li>
+        <li class="disabled">Network cross-promo</li>
+      </ul>
+      <button class="pricing-btn pricing-btn-outline">Get started</button>
+    </div>
+    <div class="pricing-card featured skeuo-btn reveal delay-2">
+      <div class="pricing-tier">Pro Creator</div>
+      <div class="pricing-price"><sup>$</sup>1,200</div>
+      <div class="pricing-price-period">per month</div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>Bi-weekly strategy calls</li>
+        <li>3 Brand pitches per month</li>
+        <li>Short-form video editing (4/mo)</li>
+        <li>Contract negotiation</li>
+        <li>Slack channel access</li>
+        <li class="disabled">Full Network cross-promo</li>
+      </ul>
+      <button class="pricing-btn pricing-btn-filled">Get started</button>
+    </div>
+    <div class="pricing-card skeuo-btn reveal delay-3">
+      <div class="pricing-tier">Enterprise</div>
+      <div class="pricing-price"><sup>$</sup>3,500</div>
+      <div class="pricing-price-period">per month</div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>Everything in Pro</li>
+        <li>Unlimited brand management</li>
+        <li>1 feature on all 4 IG Pages</li>
+        <li>Dedicated account manager</li>
+        <li>24/7 priority support</li>
+      </ul>
+      <button class="pricing-btn pricing-btn-outline">Get started</button>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="test-header">
+    <div class="section-eyebrow">Testimonials</div>
+    <h2 class="section-title">What our creators<br><span style="color:var(--accent)">say about us.</span></h2>
+  </div>
+  <div class="test-track-wrap">
+    <div class="test-track" id="test-track">
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-body">"CollabSponser completely changed my revenue model. I stopped chasing small deals and they landed me a 6-month tech sponsorship."</p>
+        <div class="test-author">
+          <div class="test-avatar">AK</div>
+          <div><div class="test-name">Alex K.</div><div class="test-role">Tech YouTuber (400k)</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-body">"The cross-promo on their owned IG pages pushed my latest launch over the edge. Gained 10k authentic followers in a week."</p>
+        <div class="test-author">
+          <div class="test-avatar">JM</div>
+          <div><div class="test-name">James M.</div><div class="test-role">Digital Artist</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-body">"Professional, transparent, and they actually understand the algorithm. I've recommended CollabSponser to every creator I know."</p>
+        <div class="test-author">
+          <div class="test-avatar">SC</div>
+          <div><div class="test-name">Sarah C.</div><div class="test-role">Lifestyle Creator</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-body">"CollabSponser completely changed my revenue model. I stopped chasing small deals and they landed me a 6-month tech sponsorship."</p>
+        <div class="test-author">
+          <div class="test-avatar">AK</div>
+          <div><div class="test-name">Alex K.</div><div class="test-role">Tech YouTuber (400k)</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-body">"The cross-promo on their owned IG pages pushed my latest launch over the edge. Gained 10k authentic followers in a week."</p>
+        <div class="test-author">
+          <div class="test-avatar">JM</div>
+          <div><div class="test-name">James M.</div><div class="test-role">Digital Artist</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-body">"Professional, transparent, and they actually understand the algorithm. I've recommended CollabSponser to every creator I know."</p>
+        <div class="test-author">
+          <div class="test-avatar">SC</div>
+          <div><div class="test-name">Sarah C.</div><div class="test-role">Lifestyle Creator</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CANVAS CTA SECTION ─────────────────────────────── -->
+<section id="canvas-cta">
+  <div class="cta-inner">
+    <div class="cta-text reveal">
+      <div class="section-eyebrow" style="justify-content:center">Start Today</div>
+      <h2 class="section-title">Ready to dominate<br><span style="color:var(--accent)">the algorithm?</span></h2>
+      <p class="section-sub" style="margin:0 auto 2rem;text-align:center;max-width:480px">Join the creators we've helped scale their influence into empires. One inquiry is all it takes.</p>
+    </div>
+    <div class="cta-btn-wrap reveal delay-2">
+      <a href="mailto:collab@collabsponser.com" class="canvas-cta-btn" id="orbit-cta-btn">
+        <span>Send Inquiry →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="logo"><span class="logo-dot"></span>CollabSponser</a>
+      <p class="footer-desc">The premium network dedicated to scaling creators and connecting them with top-tier brands across the digital landscape.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Twitter">
+          <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+    
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="#about">About</a>
+      <a href="#works">Case Studies</a>
+      <a href="#programs">Programs</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#testimonials">Testimonials</a>
+    </div>
+    
+    <div class="footer-col">
+      <h4>Our Managed Network</h4>
+      <a href="https://instagram.com/TechInnovators" target="_blank" class="ig-page-link">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2"/></svg>
+        <div class="ig-info">
+          <span class="ig-handle">@TechInnovators</span>
+          <span class="ig-followers">500k+ Followers</span>
+        </div>
+        <a href="https://instagram.com/TechInnovators" target="_blank" class="ig-view-btn">View</a>
+      </a>
+      <a href="https://instagram.com/CodeAesthetics" target="_blank" class="ig-page-link">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2"/></svg>
+        <div class="ig-info">
+          <span class="ig-handle">@CodeAesthetics</span>
+          <span class="ig-followers">320k+ Followers</span>
+        </div>
+        <a href="https://instagram.com/CodeAesthetics" target="_blank" class="ig-view-btn">View</a>
+      </a>
+      <a href="https://instagram.com/FutureGadgets" target="_blank" class="ig-page-link">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2"/></svg>
+        <div class="ig-info">
+          <span class="ig-handle">@FutureGadgets</span>
+          <span class="ig-followers">850k+ Followers</span>
+        </div>
+        <a href="https://instagram.com/FutureGadgets" target="_blank" class="ig-view-btn">View</a>
+      </a>
+      <a href="https://instagram.com/DesignDaily" target="_blank" class="ig-page-link">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2"/></svg>
+        <div class="ig-info">
+          <span class="ig-handle">@DesignDaily</span>
+          <span class="ig-followers">1.2M+ Followers</span>
+        </div>
+        <a href="https://instagram.com/DesignDaily" target="_blank" class="ig-view-btn">View</a>
+      </a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">Careers</a>
+      <a href="#">Press Kit</a>
+      <a href="#">Partner Program</a>
+      <a href="#">Creator Blog</a>
+    </div>
+  </div>
+  
+  <div class="footer-map">
+    <div class="footer-map-inner">
+      <div class="footer-contact">
+        <h4>Get In Touch</h4>
+        <div class="contact-line">
+          <span class="contact-label">HQ</span>
+          <span class="contact-val">Global Operations<br>Remote First</span>
+        </div>
+        <div class="contact-line">
+          <span class="contact-label">Email</span>
+          <span class="contact-val">collab@collabsponser.com</span>
+        </div>
+        <div class="contact-line">
+          <span class="contact-label">Network</span>
+          <span class="contact-val">Access to 4+ Elite IG Pages</span>
+        </div>
+        <br>
+        <a href="mailto:collab@collabsponser.com" class="hero-cta skeuo-btn" style="display:inline-flex;font-size:11px;padding:14px 28px">Send Inquiry →</a>
+      </div>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.2!2d2.3088!3d48.8728!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66fc4b8640a95%3A0x27e28f258dddda02!2sRue%20du%20Faubourg%20Saint-Honor%C3%A9%2C%20Paris!5e0!3m2!1sen!2sfr!4v1650000000000"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="HQ location map">
+      </iframe>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 CollabSponser. All rights reserved.</div>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Hamburger Menu */
+const ham = document.getElementById('hamburger');
+const menu = document.getElementById('nav-menu');
+ham.addEventListener('click', () => {
+  ham.classList.toggle('open');
+  menu.classList.toggle('open');
+});
+document.querySelectorAll('.nav-menu a').forEach(a => a.addEventListener('click', () => {
+  ham.classList.remove('open'); menu.classList.remove('open');
+}));
+
+/* Intersection Observer for Smooth Reveal Animations & Section Tracking */
+const sectionColors = {
+  'hero': { r: 130, g: 255, b: 0 },
+  'about': { r: 0, g: 229, b: 255 },
+  'stats': { r: 191, g: 90, b: 242 },
+  'works': { r: 10, g: 132, b: 255 },
+  'services': { r: 255, g: 55, b: 95 },
+  'programs': { r: 255, g: 159, b: 10 },
+  'pricing': { r: 255, g: 214, b: 10 },
+  'testimonials': { r: 94, g: 92, b: 230 },
+  'canvas-cta': { r: 130, g: 255, b: 0 }
+};
+
+window.bgTargetColor = { r: 130, g: 255, b: 0 };
+
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      if (!e.target.classList.contains('visible')) {
+        e.target.classList.add('visible');
+      }
+      
+      // If it's a section, update the background color
+      if (e.target.tagName === 'SECTION' && sectionColors[e.target.id]) {
+        window.bgTargetColor = sectionColors[e.target.id];
+      }
+    }
+  });
+}, { threshold: 0.25, rootMargin: "-10% 0px -10% 0px" });
+
+revealEls.forEach(el => obs.observe(el));
+document.querySelectorAll('section, .hero').forEach(sec => {
+  if (sec.id || sec.classList.contains('hero')) {
+    obs.observe(sec);
+  }
+});
+
+/* Smooth Count-up for Stats */
+function countUp(el) {
+  const target = parseInt(el.getAttribute('data-target'));
+  const duration = 2500; const step = 20;
+  const increment = target / (duration / step); 
+  let current = 0;
+  const timer = setInterval(() => {
+    current += increment;
+    if(current >= target) { current = target; clearInterval(timer); }
+    // Add '+' or '%' if it was in the label text
+    el.textContent = Math.round(current) + (target > 100 ? '+' : '');
+  }, step);
+}
+const statObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.querySelectorAll('[data-target]').forEach(countUp);
+      statObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('#stats').forEach(s => statObs.observe(s));
+
+/* ── 3D GLOBAL BG ORBIT ANIMATION & CLICK EFFECTS ─────────────────────────────── */
+(function() {
+  const canvas = document.getElementById('global-orbit-canvas');
+  const cursor = document.getElementById('custom-cursor');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  
+  let width, height;
+  let circles = [];
+  let particles = []; // For click explosions
+  const circleCount = 200; 
+  
+  let curCol = { r: 130, g: 255, b: 0 };
+  
+  let mouseX = 0, mouseY = 0;
+  let targetTiltX = 0, targetTiltY = 0;
+  let currentTiltX = 0, currentTiltY = 0;
+
+  function resize() {
+    width = canvas.width = window.innerWidth * window.devicePixelRatio;
+    height = canvas.height = window.innerHeight * window.devicePixelRatio;
+    if (proj) {
+      proj.projCenterX = width / 2;
+      proj.projCenterY = height / 2;
+    }
+  }
+
+  // Particle Class for "Blasting Rays"
+  function Ray(x, y, color) {
+    this.x = x;
+    this.y = y;
+    this.angle = Math.random() * Math.PI * 2;
+    this.speed = Math.random() * 10 + 5;
+    this.friction = 0.97;
+    this.life = 1.0;
+    this.decay = Math.random() * 0.015 + 0.01;
+    this.color = color;
+    this.len = Math.random() * 30 + 15;
+  }
+  Ray.prototype.update = function() {
+    this.speed *= this.friction;
+    this.x += Math.cos(this.angle) * this.speed;
+    this.y += Math.sin(this.angle) * this.speed;
+    this.life -= this.decay;
+  };
+  Ray.prototype.render = function() {
+    ctx.beginPath();
+    ctx.strokeStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.life})`;
+    ctx.lineWidth = 3.5 * this.life;
+    ctx.moveTo(this.x, this.y);
+    ctx.lineTo(this.x + Math.cos(this.angle) * this.len * this.life, this.y + Math.sin(this.angle) * this.len * this.life);
+    ctx.stroke();
+  };
+
+  const Basic3DProjection = function() {
+    this.projCenterX = 0;
+    this.projCenterY = 0;
+    this.fLength = 400;
+    this.refZ = 600;
+    this.getScaleFromZ = function(z) {
+      return (this.fLength + z === 0) ? 0.001 : this.refZ / (this.fLength + z);
+    };
+    this.doProjection = function(o) {
+      // Add a slight parallax shift based on tilt
+      const px = o.posX + (currentTiltX * o.posZ * 0.5);
+      const py = o.posY + (currentTiltY * o.posZ * 0.5);
+      
+      o.screenX = px * this.getScaleFromZ(o.posZ) + this.projCenterX;
+      o.screenY = py * this.getScaleFromZ(o.posZ) + this.projCenterY;
+      o.scale = this.getScaleFromZ(o.posZ);
+    };
+    this.rotateY = function(o, ang) {
+      const c = Math.cos(ang), s = Math.sin(ang);
+      const tz = o.posZ * c - o.posX * s;
+      const tx = o.posZ * s + o.posX * c;
+      o.posX = tx; o.posZ = tz;
+    };
+    this.rotateX = function(o, ang) {
+      const c = Math.cos(ang), s = Math.sin(ang);
+      const ty = o.posY * c - o.posZ * s;
+      const tz = o.posY * s + o.posZ * c;
+      o.posY = ty; o.posZ = tz;
+    };
+  };
+
+  const proj = new Basic3DProjection();
+  resize();
+
+  function Obj3D(x, y, z) { 
+    this.posX = x; this.posY = y; this.posZ = z; 
+    this.screenX = 0; this.screenY = 0; this.scale = 1; 
+  }
+
+  function Circle() {
+    const radius = Math.random() * 500 + 100;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos((Math.random() * 2) - 1);
+    
+    this.shape = new Obj3D(
+      radius * Math.sin(phi) * Math.cos(theta),
+      radius * Math.sin(phi) * Math.sin(theta),
+      radius * Math.cos(phi)
+    );
+    
+    this.rotX = (Math.random() - 0.5) * 0.003;
+    this.rotY = (Math.random() - 0.5) * 0.003;
+    this.size = Math.random() * 4 + 1.5; // Slightly larger dots
+    this.alphaBase = Math.random() * 0.5 + 0.3; // Much more visible base alpha
+  }
+
+  Circle.prototype.render = function() {
+    proj.doProjection(this.shape);
+    const depth = (this.shape.posZ + 500) / 1000;
+    
+    // Check distance to mouse
+    const dx = this.shape.screenX - (mouseX * window.devicePixelRatio);
+    const dy = this.shape.screenY - (mouseY * window.devicePixelRatio);
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    
+    let alpha = Math.max(0.05, Math.min(this.alphaBase, depth * this.alphaBase * 2));
+    
+    // More intense glow near mouse
+    if (dist < 220) {
+      const proximity = 1 - (dist / 220);
+      alpha += proximity * 0.5;
+      
+      // Draw thicker, brighter connection lines (Plexus effect)
+      ctx.beginPath();
+      ctx.strokeStyle = `rgba(${Math.round(curCol.r)}, ${Math.round(curCol.g)}, ${Math.round(curCol.b)}, ${proximity * 0.4})`;
+      ctx.lineWidth = 0.8;
+      ctx.moveTo(this.shape.screenX, this.shape.screenY);
+      ctx.lineTo(mouseX * window.devicePixelRatio, mouseY * window.devicePixelRatio);
+      ctx.stroke();
+    }
+    
+    ctx.beginPath();
+    ctx.fillStyle = `rgba(${Math.round(curCol.r)}, ${Math.round(curCol.g)}, ${Math.round(curCol.b)}, ${alpha})`;
+    ctx.arc(this.shape.screenX, this.shape.screenY, this.size * this.shape.scale * (dist < 220 ? 1.8 : 1), 0, Math.PI * 2);
+    ctx.fill();
+  };
+
+  for (let i = 0; i < circleCount; i++) circles.push(new Circle());
+
+  function loop() {
+    try {
+      ctx.clearRect(0, 0, width, height);
+      
+      // Smooth color interpolation
+      const target = window.bgTargetColor || { r: 130, g: 255, b: 0 };
+      curCol.r += (target.r - curCol.r) * 0.03;
+      curCol.g += (target.g - curCol.g) * 0.03;
+      curCol.b += (target.b - curCol.b) * 0.03;
+
+      // Dark solid background behind canvas
+      ctx.fillStyle = '#030305';
+      ctx.fillRect(0,0, width, height);
+      
+      const mxdp = mouseX * window.devicePixelRatio;
+      const mydp = mouseY * window.devicePixelRatio;
+      const grd = ctx.createRadialGradient(mxdp, mydp, 0, mxdp, mydp, 600);
+      grd.addColorStop(0, `rgba(${Math.round(curCol.r)}, ${Math.round(curCol.g)}, ${Math.round(curCol.b)}, 0.22)`);
+      grd.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = grd;
+      ctx.fillRect(0,0, width, height);
+
+      for (const c of circles) {
+        proj.rotateY(c.shape, c.rotX + (currentTiltX * 0.015));
+        proj.rotateX(c.shape, c.rotY + (currentTiltY * 0.015));
+        c.render();
+      }
+
+      // Update and Render Click Rays
+      for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        particles[i].render();
+        if (particles[i].life <= 0) particles.splice(i, 1);
+      }
+
+      requestAnimationFrame(loop);
+    } catch(e) { 
+      console.error("Canvas loop error:", e);
+      requestAnimationFrame(loop);
+    }
+  }
+
+  function handleMove(x, y) {
+    mouseX = x;
+    mouseY = y;
+    
+    if (cursor) {
+      cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+    }
+
+    targetTiltX = (mouseX / window.innerWidth - 0.5) * 2;
+    targetTiltY = (mouseY / window.innerHeight - 0.5) * 2;
+  }
+
+  function handlePress(x, y) {
+    const blastX = x * window.devicePixelRatio;
+    const blastY = y * window.devicePixelRatio;
+    for (let i = 0; i < 25; i++) {
+      particles.push(new Ray(blastX, blastY, curCol));
+    }
+    
+    if (cursor) {
+      cursor.style.transform = `translate(${x}px, ${y}px) scale(0.5)`;
+    }
+  }
+
+  window.addEventListener('mousemove', (e) => {
+    handleMove(e.clientX, e.clientY);
+  });
+
+  window.addEventListener('touchmove', (e) => {
+    if (e.touches.length > 0) {
+      handleMove(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, { passive: true });
+
+  window.addEventListener('mousedown', (e) => {
+    handlePress(e.clientX, e.clientY);
+  });
+
+  window.addEventListener('touchstart', (e) => {
+    if (e.touches.length > 0) {
+      handlePress(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, { passive: true });
+
+  window.addEventListener('mouseup', () => {
+    if (cursor) {
+      cursor.style.transform = `translate(${mouseX}px, ${mouseY}px) scale(1)`;
+    }
+  });
+
+  window.addEventListener('touchend', () => {
+    // No specific recovery needed for touch
+  });
+
+  window.addEventListener('resize', resize);
+  loop();
+})();
+</script>
+</body>
+</html>
+      
+      
+      
+      
+      

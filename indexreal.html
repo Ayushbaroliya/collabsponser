@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── SEO ─────────────────────────────────────────────── -->
+  <title>CollabSponser | Premium Creator & Growth Agency</title>
+  <meta name="description" content="CollabSponser engineers digital influence for the world's most ambitious creators.">
+  <meta name="robots" content="index, follow">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+
+
+
+  <link rel="stylesheet" href="style.css">
+  <!-- GSAP & Lenis -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+  <style>
+    /* ── RADAR BACKGROUND (Hero) ─────────────────────────── */
+    .hero-radar-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .hero-radar-bg .radar-center {
+      position: relative;
+      width: 80px; height: 80px;
+    }
+    .radar-sweep {
+      position: absolute;
+      right: 50%; top: 50%;
+      width: 550px; height: 3px;
+      background: linear-gradient(90deg, transparent 0%, var(--accent) 40%, rgba(255,20,147,0.8) 70%, transparent 100%);
+      transform-origin: right center;
+      animation: radar-spin 8s linear infinite;
+      z-index: 2;
+      box-shadow: 0 0 30px var(--accent-glow), 0 0 60px rgba(255,0,85,0.3);
+      opacity: 1;
+    }
+    @keyframes radar-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .radar-circle {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px solid rgba(255, 0, 85, 0.12);
+      opacity: 0;
+      animation: radarFadeIn 0.6s forwards;
+    }
+    @keyframes radarFadeIn {
+      to { opacity: 1; }
+    }
+    .radar-icon-item {
+      position: absolute;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0.4rem;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: auto;
+    }
+    .radar-icon-item.visible { opacity: 1; }
+    .radar-icon-box {
+      width: 3rem; height: 3rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+    .radar-icon-box:hover {
+      border-color: var(--brand-color);
+      box-shadow: 0 0 20px var(--brand-color);
+      transform: translateY(-2px);
+    }
+    .radar-icon-box svg { width: 1.4rem; height: 1.4rem; }
+    .radar-icon-text {
+      font-size: 0.65rem; font-weight: 600;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .radar-icons-container {
+      position: absolute;
+      width: 100%; height: 100%;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Light theme adjustments */
+    [data-theme="light"] .radar-circle {
+      border-color: rgba(209, 0, 71, 0.15);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── PREMIUM OVERLAYS ──────────────────────────────── -->
+  <div class="noise-overlay"></div>
+  <div class="scroll-tracker">
+    <div class="scroll-progress"></div>
+    <div class="scroll-percentage">0%</div>
+  </div>
+  <div class="floating-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
+  <!-- ── PRELOADER ─────────────────────────────────────────── -->
+  <div id="preloader" class="preloader">
+    <div class="preloader-content">
+      <div class="loader-spinner"></div>
+      <div class="loading-text">Loading CollabSponser</div>
+      <div class="loading-progress">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NAV ───────────────────────────────────────────────── -->
+  <nav id="main-nav">
+    <div class="nav-container">
+      <a href="#" class="logo"><span class="logo-dot"></span>CollabSponser</a>
+      <div class="nav-desktop">
+        <a href="#about">About</a>
+        <a href="#works">Our Works</a>
+        <a href="#services">Services</a>
+        <a href="#programs">Programs</a>
+        <a href="#pricing">Pricing</a>
+        <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24">
+            <path d="M12 17c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5z" fill="none" stroke="currentColor"
+              stroke-width="2" />
+            <path
+              d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+              stroke="currentColor" stroke-width="2" />
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor"
+              stroke-width="2" />
+          </svg>
+        </button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-menu" id="nav-menu">
+      <a href="#about">About</a>
+      <a href="#works">Our Works</a>
+      <a href="#services">Services</a>
+      <a href="#programs">Programs</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+  </nav>
+
+  <!-- ── HERO SECTION ───────────────────────────────────────── -->
+  <section class="hero" id="hero">
+
+
+    <!-- Radar Background -->
+    <div class="hero-radar-bg" id="hero-radar-bg">
+      <div class="radar-center">
+        <div class="radar-sweep"></div>
+        <div id="radar-circles"></div>
+      </div>
+      <div class="radar-icons-container" id="radar-icons"></div>
+    </div>
+
+    <div class="hero-overlay-content" id="hero-text-content">
+      <div class="hero-eyebrow">Premium Creator Agency</div>
+      <h1 class="hero-title metallic-text">
+        Collab<span class="hero-accent">Sponser</span>
+      </h1>
+      <p class="hero-sub">
+        business nahi h <em>hum h na </em><br>
+      we do our work like worship.
+      </p>
+      <div class="hero-cta-group">
+        <a href="#works" class="hero-cta">Discover Our Work →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ──────────────────────────────────────────────── -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal-left">
+        <div class="about-img card-size"></div>
+      </div>
+      <div class="about-text reveal-right">
+        <div class="section-eyebrow">Our Story</div>
+        <h2 class="section-title metallic-text">Built for the<br>modern algorithm.</h2>
+        <div class="about-divider"></div>
+        <p class="section-sub">CollabSponser blends technology and culture to transform creators into iconic digital presences.
+We believe every brand carries a powerful story waiting to be discovered.
+Our mission is to bring that story to life with clarity, creativity, and impact.
+From strategy to execution, we craft experiences that truly connect with audiences.
+We don’t just build visibility — we build meaning and long-term influence.
+Every project we take is shaped with precision, purpose, and a premium touch.
+In a fast-moving digital world, we help brands stand out and stay remembered.
+Because your story deserves more than attention — it deserves recognition.</p>
+        <br>
+        <p class="section-sub" style="color:var(--text3)">Our multidisciplinary team of strategists and social engineers
+          brings a rare blend of data analytics and creative courage to every campaign we undertake.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ──────────────────────────────────────────────── -->
+  <section id="stats">
+    <div class="stats-center-header">
+      <h2 class="section-title metallic-text">Metrics that speak</h2>
+    </div>
+    <div class="stats-grid glass">
+      <div class="stat-item reveal delay-1">
+        <div class="stat-num metallic-text" data-target="320">0</div>
+        <div class="stat-label">Campaigns</div>
+      </div>
+      <div class="stat-item reveal delay-2">
+        <div class="stat-num metallic-text" data-target="98">0</div>
+        <div class="stat-label">% Engagement</div>
+      </div>
+      <div class="stat-item reveal delay-3">
+        <div class="stat-num metallic-text" data-target="15">0</div>
+        <div class="stat-label">Million+ Reach</div>
+      </div>
+      <div class="stat-item reveal delay-4">
+        <div class="stat-num metallic-text" data-target="4">0</div>
+        <div class="stat-label">Managed Pages</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── OUR WORKS ──────────────────────────────────────────── -->
+  <section id="works">
+    <div class="works-header reveal">
+      <div class="section-eyebrow">Portfolio</div>
+      <h2 class="section-title metallic-text">Selected works.</h2>
+    </div>
+    <div class="works-grid">
+      <div class="work-card skeuo-btn reveal delay-1">
+        <img src="assets/cricket.jpg" alt="Campaign">
+        <div class="work-card-info">
+          <div class="work-tag">Sports & Strategy</div>
+          <div class="work-card-title metallic-text">The Cricket Domination</div>
+        </div>
+      </div>
+      <div class="work-card skeuo-btn reveal delay-2">
+        <img src="assets/shreefitness.jpeg" alt="Campaign">
+        <div class="work-card-info">
+          <div class="work-tag">Fitness</div>
+          <div class="work-card-title metallic-text">Shree Fitness Growth</div>
+        </div>
+      </div>
+      <div class="work-card skeuo-btn reveal delay-3">
+        <img src="assets/shankari.jpg" alt="Campaign">
+        <div class="work-card-info">
+          <div class="work-tag">Growth</div>
+          <div class="work-card-title metallic-text">Audience Architecture</div>
+        </div>
+      </div>
+      <!-- <div class="work-card skeuo-btn reveal delay-4">
+      <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600" alt="Event">
+      <div class="work-card-info">
+        <div class="work-tag">Event</div>
+        <div class="work-card-title metallic-text">Creator Summit</div>
+      </div>
+    </div> -->
+    </div>
+  </section>
+
+  <!-- ── SERVICES ───────────────────────────────────────────── -->
+  <section id="services">
+    <div class="services-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">What We Offer</div>
+      <h2 class="section-title metallic-text">Our Core Services<br><span style="color:var(--accent)">to elevate your
+          brand.</span></h2>
+      <p class="section-sub" style="margin:0 auto;text-align:center;max-width:600px">Comprehensive digital solutions
+        designed to maximize your online presence and drive results.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card skeuo-btn reveal delay-1">
+        <img src="https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=600" alt="SEO Optimization" class="service-img">
+        <div class="service-content">
+          <div class="service-icon">🔍</div>
+          <h3 class="service-title">SEO Optimization</h3>
+          <p class="service-desc">Dominate search rankings with data-driven keyword strategies, on-page optimization, and authority building tailored to your niche.</p>
+          <a href="#contact" class="service-link">Learn more →</a>
+        </div>
+      </div>
+      <div class="service-card skeuo-btn reveal delay-2">
+        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=600" alt="Web Development" class="service-img">
+        <div class="service-content">
+          <div class="service-icon">🌐</div>
+          <h3 class="service-title">Web Development</h3>
+          <p class="service-desc">High-performance, conversion-focused websites built with modern tech stacks — designed to impress and engineered to convert.</p>
+          <a href="#contact" class="service-link">Learn more →</a>
+        </div>
+      </div>
+      <div class="service-card skeuo-btn reveal delay-3">
+        <img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?w=600" alt="Influencer Marketing" class="service-img">
+        <div class="service-content">
+          <div class="service-icon">🌟</div>
+          <h3 class="service-title">Influencer Marketing</h3>
+          <p class="service-desc">End-to-end creator partnerships — from outreach and contracts to content integration and campaign performance tracking.</p>
+          <a href="#contact" class="service-link">Learn more →</a>
+        </div>
+      </div>
+      <div class="service-card skeuo-btn reveal delay-4">
+        <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600" alt="Meta Ads" class="service-img">
+        <div class="service-content">
+          <div class="service-icon">📘</div>
+          <h3 class="service-title">Meta Ads</h3>
+          <p class="service-desc">Precision-targeted Facebook & Instagram ad campaigns that maximize ROAS, drive leads, and scale your audience exponentially.</p>
+          <a href="#contact" class="service-link">Learn more →</a>
+        </div>
+      </div>
+      <div class="service-card skeuo-btn reveal delay-5">
+        <img src="https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=600" alt="Google Ads" class="service-img">
+        <div class="service-content">
+          <div class="service-icon">🎯</div>
+          <h3 class="service-title">Google Ads</h3>
+          <p class="service-desc">Search, Display & YouTube campaigns designed to capture high-intent buyers and deliver measurable ROI at every stage.</p>
+          <a href="#contact" class="service-link">Learn more →</a>
+        </div>
+      </div>
+      <div class="service-card skeuo-btn reveal delay-5">
+        <img src="https://images.unsplash.com/photo-1616469829941-c7200edec809?w=600" alt="Google Business Profile" class="service-img">
+        <div class="service-content">
+          <div class="service-icon">📍</div>
+          <h3 class="service-title">Google Business Profile</h3>
+          <p class="service-desc">Optimize your GBP listing to dominate local search, build trust with reviews, and drive foot traffic to your business.</p>
+          <a href="#contact" class="service-link">Learn more →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROGRAMS ───────────────────────────────────────────── -->
+  <section id="programs">
+    <div style="text-align:center">
+      <div class="section-eyebrow" style="justify-content:center">What We Offer</div>
+      <h2 class="section-title metallic-text">Programs built for<br><span style="color:var(--accent)">viral
+          growth.</span></h2>
+      <p class="section-sub" style="margin:0 auto;text-align:center">Tailored engagements designed to scale your digital
+        presence.</p>
+    </div>
+    <div class="programs-grid">
+      <div class="program-card skeuo-btn reveal delay-1">
+        <div class="program-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="program-card-title metallic-text">Brand Collabs</div>
+        <p class="program-card-desc">End-to-end management of sponsorships connecting creators with top-tier tech
+          brands.</p>
+        <ul class="program-features">
+          <li>Brand outreach strategy</li>
+          <li>Contract negotiation</li>
+          <li>Content integration</li>
+        </ul>
+        <a href="#pricing" class="program-link">Explore program →</a>
+      </div>
+      <div class="program-card skeuo-btn reveal delay-2">
+        <div class="program-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" />
+            <path d="M12 6v6l4 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div class="program-card-title metallic-text">Audience Growth</div>
+        <p class="program-card-desc">Data-driven strategies to rapidly scale your followers and boost engagement rates.
+        </p>
+        <ul class="program-features">
+          <li>Algorithm optimization</li>
+          <li>Trend forecasting</li>
+          <li>Community management</li>
+        </ul>
+        <a href="#pricing" class="program-link">Explore program →</a>
+      </div>
+      <div class="program-card skeuo-btn reveal delay-3">
+        <div class="program-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="program-card-title metallic-text">Content Studio</div>
+        <p class="program-card-desc">High-impact content creation across all modern social channels and platforms.</p>
+        <ul class="program-features">
+          <li>Short-form video editing</li>
+          <li>Thumbnail design</li>
+          <li>Multi-channel rollout</li>
+        </ul>
+        <a href="#pricing" class="program-link">Explore program →</a>
+      </div>
+      <div class="program-card skeuo-btn reveal delay-4">
+        <div class="program-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" />
+            <circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div class="program-card-title metallic-text">Network Access</div>
+        <p class="program-card-desc">Direct placement and cross-promotion across our 4 owned, massive Instagram pages.
+        </p>
+        <ul class="program-features">
+          <li>Guaranteed impressions</li>
+          <li>Targeted demographics</li>
+          <li>Story & Feed features</li>
+        </ul>
+        <a href="#pricing" class="program-link">Explore program →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── METRICS ──────────────────────────────────────────── -->
+  <section id="metrics">
+    <div style="text-align:center; margin-bottom:60px">
+      <div class="section-eyebrow" style="justify-content:center">Performance</div>
+      <h2 class="section-title metallic-text">Numbers that<br><span style="color:var(--accent)">define us.</span></h2>
+      <p class="section-sub" style="margin:0 auto;text-align:center;max-width:500px">Real results from real campaigns — tracked, measured, and delivered.</p>
+    </div>
+    <div class="metrics-grid">
+      <!-- Radial Chart Cards -->
+      <div class="metric-card reveal delay-1">
+        <div class="radial-wrap">
+          <svg viewBox="0 0 120 120" class="radial-svg">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="10"/>
+            <circle cx="60" cy="60" r="50" fill="none" stroke="url(#grad1)" stroke-width="10"
+              stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="31"
+              transform="rotate(-90 60 60)" class="radial-progress" data-offset="31"/>
+            <defs>
+              <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#ff0055"/>
+                <stop offset="100%" style="stop-color:#ff5e00"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="radial-label"><span class="radial-num metallic-text">90%</span><span class="radial-sub">Client<br>Retention</span></div>
+        </div>
+      </div>
+      <div class="metric-card reveal delay-2">
+        <div class="radial-wrap">
+          <svg viewBox="0 0 120 120" class="radial-svg">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="10"/>
+            <circle cx="60" cy="60" r="50" fill="none" stroke="url(#grad2)" stroke-width="10"
+              stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="22"
+              transform="rotate(-90 60 60)" class="radial-progress" data-offset="22"/>
+            <defs>
+              <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#00f2ff"/>
+                <stop offset="100%" style="stop-color:#0070ff"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="radial-label"><span class="radial-num metallic-text">93%</span><span class="radial-sub">Campaign<br>Success Rate</span></div>
+        </div>
+      </div>
+      <div class="metric-card reveal delay-3">
+        <div class="radial-wrap">
+          <svg viewBox="0 0 120 120" class="radial-svg">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="10"/>
+            <circle cx="60" cy="60" r="50" fill="none" stroke="url(#grad3)" stroke-width="10"
+              stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="47"
+              transform="rotate(-90 60 60)" class="radial-progress" data-offset="47"/>
+            <defs>
+              <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#a855f7"/>
+                <stop offset="100%" style="stop-color:#ff0055"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="radial-label"><span class="radial-num metallic-text">85%</span><span class="radial-sub">Avg. ROAS<br>Improvement</span></div>
+        </div>
+      </div>
+      <!-- Bar Chart Card -->
+      <div class="metric-card metric-wide reveal delay-4">
+        <div class="bar-chart-header">
+          <div class="section-eyebrow">Platform Reach</div>
+          <p style="font-size:13px;color:var(--text-dim);margin-top:6px">Monthly impressions by channel (in millions)</p>
+        </div>
+        <div class="bar-chart">
+          <div class="bar-row"><span class="bar-platform">Instagram</span><div class="bar-track"><div class="bar-fill" style="--bar-w:88%;background:linear-gradient(90deg,#E4405F,#ff8fa3)">8.8M</div></div></div>
+          <div class="bar-row"><span class="bar-platform">YouTube</span><div class="bar-track"><div class="bar-fill" style="--bar-w:72%;background:linear-gradient(90deg,#FF0000,#ff6b6b)">7.2M</div></div></div>
+          <div class="bar-row"><span class="bar-platform">Google</span><div class="bar-track"><div class="bar-fill" style="--bar-w:60%;background:linear-gradient(90deg,#4285F4,#34a853)">6.0M</div></div></div>
+          <div class="bar-row"><span class="bar-platform">Facebook</span><div class="bar-track"><div class="bar-fill" style="--bar-w:48%;background:linear-gradient(90deg,#1877F2,#42a5f5)">4.8M</div></div></div>
+          <div class="bar-row"><span class="bar-platform">Meta Ads</span><div class="bar-track"><div class="bar-fill" style="--bar-w:55%;background:linear-gradient(90deg,#ff0055,#ff5e00)">5.5M</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIALS ───────────────────────────────────────── -->
+  <section id="testimonials">
+    <div class="test-header">
+      <div class="section-eyebrow">Testimonials</div>
+      <h2 class="section-title metallic-text">What our creators<br><span style="color:var(--accent)">say about
+          us.</span></h2>
+    </div>
+    <div class="test-track-wrap">
+      <div class="test-track" id="test-track">
+        <div class="test-card">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-body">"CollabSponser completely changed my revenue model. I stopped chasing small deals and
+            they landed me a 6-month tech sponsorship."</p>
+          <div class="test-author">
+            <div class="test-avatar">AK</div>
+            <div>
+              <div class="test-name">Alex K.</div>
+              <div class="test-role">Tech YouTuber</div>
+            </div>
+          </div>
+        </div>
+        <div class="test-card">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-body">"The cross-promo on their owned IG pages pushed my latest launch over the edge. Gained
+            10k authentic followers in a week."</p>
+          <div class="test-author">
+            <div class="test-avatar">JM</div>
+            <div>
+              <div class="test-name">James M.</div>
+              <div class="test-role">Digital Artist</div>
+            </div>
+          </div>
+        </div>
+        <div class="test-card">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-body">"Professional, transparent, and they actually understand the algorithm. I've recommended
+            CollabSponser to every creator I know."</p>
+          <div class="test-author">
+            <div class="test-avatar">SC</div>
+            <div>
+              <div class="test-name">Sarah C.</div>
+              <div class="test-role">Lifestyle Creator</div>
+            </div>
+          </div>
+        </div>
+        <div class="test-card">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-body">"CollabSponser completely changed my revenue model. I stopped chasing small deals and
+            they landed me a 6-month tech sponsorship."</p>
+          <div class="test-author">
+            <div class="test-avatar">AK</div>
+            <div>
+              <div class="test-name">Alex K.</div>
+              <div class="test-role">Tech YouTuber</div>
+            </div>
+          </div>
+        </div>
+        <div class="test-card">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-body">"The cross-promo on their owned IG pages pushed my latest launch over the edge. Gained
+            10k authentic followers in a week."</p>
+          <div class="test-author">
+            <div class="test-avatar">JM</div>
+            <div>
+              <div class="test-name">James M.</div>
+              <div class="test-role">Digital Artist</div>
+            </div>
+          </div>
+        </div>
+        <div class="test-card">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-body">"Professional, transparent, and they actually understand the algorithm. I've recommended
+            CollabSponser to every creator I know."</p>
+          <div class="test-author">
+            <div class="test-avatar">SC</div>
+            <div>
+              <div class="test-name">Sarah C.</div>
+              <div class="test-role">Lifestyle Creator</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA BANNER ──────────────────────────────────────── -->
+  <section id="cta-banner" style="padding:80px 5%;text-align:center;background:linear-gradient(135deg,rgba(255,0,85,0.08),rgba(0,242,255,0.04));border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);">
+    <div class="section-eyebrow" style="justify-content:center;margin-bottom:16px">Ready to grow?</div>
+    <h2 class="section-title metallic-text" style="margin-bottom:20px">Let's build something<br><span style="color:var(--accent)">extraordinary.</span></h2>
+    <p class="section-sub" style="margin:0 auto 40px;text-align:center;max-width:500px">Partner with CollabSponser and turn your digital presence into a revenue machine.</p>
+    <a href="https://wa.me/918076632408" target="_blank" class="hero-cta" style="display:inline-block">Start Your Journey →</a>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer id="contact" class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand-col">
+        <a href="#" class="logo metallic-text"><span class="logo-dot"></span>CollabSponser</a>
+        <p class="footer-tagline">We engineer digital influence for the world's most ambitious creators and brands.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2"/></svg></a>
+          <a href="#" class="social-btn" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+          <a href="https://wa.me/918076632408" class="social-btn" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-links-col">
+        <h4 class="footer-col-title">Services</h4>
+        <ul class="footer-links">
+          <li><a href="#services">SEO Optimization</a></li>
+          <li><a href="#services">Web Development</a></li>
+          <li><a href="#services">Influencer Marketing</a></li>
+          <li><a href="#services">Meta Ads</a></li>
+          <li><a href="#services">Google Ads</a></li>
+          <li><a href="#services">Google Business Profile</a></li>
+        </ul>
+      </div>
+      <div class="footer-links-col">
+        <h4 class="footer-col-title">Company</h4>
+        <ul class="footer-links">
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#works">Our Works</a></li>
+          <li><a href="#programs">Programs</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#metrics">Results</a></li>
+        </ul>
+      </div>
+      <div class="footer-links-col">
+        <h4 class="footer-col-title">Contact</h4>
+        <ul class="footer-links">
+          <li><a href="tel:+918076632408">+91 80766 32408</a></li>
+          <li><a href="https://wa.me/918076632408" target="_blank">WhatsApp Us</a></li>
+          <li><a href="https://maps.google.com" target="_blank">View on Map</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 CollabSponser. All rights reserved.</span>
+      <span style="color:var(--accent)">Made with ❤️ for creators.</span>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Sticky -->
+  <a href="https://wa.me/1234567890" class="whatsapp-sticky" target="_blank" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+    </svg>
+  </a>
+
+  <!-- Radar Background Init -->
+  <script>
+  (function() {
+    document.addEventListener('DOMContentLoaded', function() {
+      var circlesEl = document.getElementById('radar-circles');
+      var iconsEl = document.getElementById('radar-icons');
+      if (!circlesEl || !iconsEl) return;
+
+      // Generate concentric circles — start large to avoid center content
+      for (var i = 0; i < 8; i++) {
+        var c = document.createElement('div');
+        c.className = 'radar-circle';
+        var size = 250 + (i * 100); // starts at 250px, goes to 950px
+        c.style.width = size + 'px';
+        c.style.height = size + 'px';
+        c.style.borderColor = 'rgba(255, 0, 85, ' + (0.25 - i * 0.025) + ')';
+        c.style.animationDelay = (i * 0.15) + 's';
+        circlesEl.appendChild(c);
+      }
+
+      // Icons with brand colors — orbiting at larger radii
+      var icons = [
+        { label: 'Instagram', color: '#E4405F', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>', angle: 0, radius: 320, speed: 0.18 },
+        { label: 'Facebook', color: '#1877F2', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>', angle: 60, radius: 400, speed: -0.12 },
+        { label: 'YouTube', color: '#FF0000', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.14 1 12 1 12s0 3.86.42 5.58a2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.86 23 12 23 12s0-3.86-.42-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>', angle: 120, radius: 350, speed: 0.09 },
+        { label: 'SEO', color: '#10B981', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M11 8v6M8 11h6"/></svg>', angle: 180, radius: 380, speed: -0.1 },
+        { label: 'Web Design', color: '#0EA5E9', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>', angle: 240, radius: 450, speed: 0.07 },
+        { label: 'EMS', color: '#F59E0B', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>', angle: 300, radius: 420, speed: -0.15 },
+      ];
+
+      var items = icons.map(function(item, index) {
+        var el = document.createElement('div');
+        el.className = 'radar-icon-item';
+        el.style.setProperty('--brand-color', item.color);
+        el.innerHTML = '<div class="radar-icon-box" style="color:' + item.color + ';border-color:' + item.color + '44">' + item.svg + '</div><div class="radar-icon-text">' + item.label + '</div>';
+        iconsEl.appendChild(el);
+
+        setTimeout(function() { el.classList.add('visible'); }, 1500 + index * 250);
+        return { el: el, data: item };
+      });
+
+      function animate() {
+        items.forEach(function(item) {
+          item.data.angle += item.data.speed;
+          var rad = (item.data.angle - 90) * (Math.PI / 180);
+          var x = Math.cos(rad) * item.data.radius;
+          var y = Math.sin(rad) * item.data.radius;
+          item.el.style.left = 'calc(50% + ' + x + 'px)';
+          item.el.style.top = 'calc(50% + ' + y + 'px)';
+          item.el.style.transform = 'translate(-50%, -50%)';
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
+    });
+  })();
+  </script>
+
+  <script>
+  // Animate bar charts and radial rings on scroll
+  (function() {
+    var observed = false;
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting && !observed) {
+          observed = true;
+          // Animate bars
+          document.querySelectorAll('.bar-fill').forEach(function(bar) {
+            setTimeout(function() { bar.classList.add('animated'); }, 200);
+          });
+          // Animate radial rings — already at target offset in HTML, animate from 314 (empty)
+          document.querySelectorAll('.radial-progress').forEach(function(circle) {
+            var target = parseFloat(circle.getAttribute('data-offset'));
+            circle.style.strokeDashoffset = '314';
+            setTimeout(function() {
+              circle.style.strokeDashoffset = target;
+            }, 300);
+          });
+        }
+      });
+    }, { threshold: 0.2 });
+    var metricsEl = document.getElementById('metrics');
+    if (metricsEl) observer.observe(metricsEl);
+  })();
+  </script>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

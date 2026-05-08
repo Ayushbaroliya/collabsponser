@@ -1,5 +1,5 @@
 /**
- * CollabSponser | Fast & Responsive Interactions
+ * CollabSponsor | Fast & Responsive Interactions
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollProgress();
   initMetrics();
   initModal();
-  initCardEffects();
 });
 
 // ── DYNAMIC DATA & WHATSAPP ───────────────────────
@@ -37,17 +36,15 @@ function initDynamicData() {
         modalWa.href = `https://wa.me/${waNumber}`;
       }
 
-      // Update CTA Banner button
-      const ctaBanner = document.querySelector('#cta-banner .hero-cta');
       if (ctaBanner) {
-        ctaBanner.href = `https://wa.me/${waNumber}?text=${encodeURIComponent("Hello CollabSponser, I'm ready to build something extraordinary!")}`;
+        ctaBanner.href = `https://wa.me/${waNumber}?text=${encodeURIComponent("Hello CollabSponsor, I'm ready to build something extraordinary!")}`;
       }
 
       // Update all WhatsApp links
       const waLinks = document.querySelectorAll('a[href*="wa.me"], .whatsapp-sticky');
       waLinks.forEach(link => {
         const isSticky = link.classList.contains('whatsapp-sticky');
-        const text = isSticky ? "Hi CollabSponser! I have a general inquiry." : "Hello CollabSponser!";
+        const text = isSticky ? "Hi CollabSponsor! I have a general inquiry." : "Hello CollabSponsor!";
         link.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
         link.target = '_blank';
       });
@@ -61,6 +58,16 @@ function initDynamicData() {
             btn.target = '_blank';
           });
         });
+      }
+
+      // Populate Brand Marquee
+      if (data.brands) {
+        const marqueeContainer = document.getElementById('brand-marquee');
+        if (marqueeContainer) {
+          // Double the items for seamless looping
+          const items = [...data.brands, ...data.brands];
+          marqueeContainer.innerHTML = items.map(brand => `<div class="marquee-item">${brand}</div>`).join('');
+        }
       }
     })
     .catch(err => console.warn('Could not load data.json. Note: This feature requires a local server (e.g. Live Server) due to CORS:', err));
@@ -250,27 +257,34 @@ function initScrollProgress() {
   const sections = document.querySelectorAll('section');
   const navLinks = document.querySelectorAll('.nav-desktop a, .nav-menu a');
 
+  let isScrolling = false;
   window.addEventListener('scroll', () => {
-    if (scrollProgress) {
-      const scrollTotal = document.documentElement.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      scrollProgress.style.width = `${(scrollTotal / height) * 100}%`;
+    if (!isScrolling) {
+      window.requestAnimationFrame(() => {
+        if (scrollProgress) {
+          const scrollTotal = document.documentElement.scrollTop;
+          const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          scrollProgress.style.width = `${(scrollTotal / height) * 100}%`;
+        }
+
+        let current = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          if (window.scrollY >= (sectionTop - 200)) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+          }
+        });
+        isScrolling = false;
+      });
+      isScrolling = true;
     }
-
-    let current = '';
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      if (window.scrollY >= (sectionTop - 200)) {
-        current = section.getAttribute('id');
-      }
-    });
-
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === `#${current}`) {
-        link.classList.add('active');
-      }
-    });
   });
 }
 
@@ -327,18 +341,5 @@ function initModal() {
     if (e.key === 'Escape' && modal.classList.contains('open')) {
       closeModal();
     }
-  });
-}
-// ── CARD EFFECTS ──────────────────────────────────
-function initCardEffects() {
-  const cards = document.querySelectorAll('.service-card');
-  cards.forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      card.style.setProperty('--mouse-x', `${x}%`);
-      card.style.setProperty('--mouse-y', `${y}%`);
-    });
   });
 }

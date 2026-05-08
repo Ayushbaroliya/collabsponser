@@ -1,10 +1,17 @@
 {
   "whatsapp": {
     "phoneNumber": "9109832579",
-    "baseMessage": "Hello CollabSponser! I am interested in learning more about "
+    "baseMessage": "Hello CollabSponsor! I am interested in learning more about "
   },
   "socialMedia": {
     "Instagram": "https://www.instagram.com/collabsponsor?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     "Twitter": "https://www.instagram.com/collabsponsor?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-  }
+  },
+  "brands": [
+    "Mishra Eye Clinic",
+    "E-With",
+    "J.P CRICKET ACADEMY",
+    "SHREE FITNESS GYM",
+    "SHANKRI JEWELLERS"
+  ]
 }

@@ -10,7 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initHamburger();
   initScrollReveal();
   initScrollProgress();
-  initCountUp();
+  initMetrics();
+  initModal();
+  initCardEffects();
 });
 
 // ── DYNAMIC DATA & WHATSAPP ───────────────────────
@@ -21,13 +23,19 @@ function initDynamicData() {
       const waNumber = data.whatsapp.phoneNumber;
       const baseMsg = data.whatsapp.baseMessage;
 
-      // Update all "Learn more" buttons in services
-      document.querySelectorAll('.service-link').forEach(link => {
-        const card = link.closest('.service-card');
-        const title = card ? card.querySelector('.service-title').innerText : 'your services';
+      // Update all "Enquire" buttons in services and programs
+      document.querySelectorAll('.enquire-btn').forEach(link => {
+        const card = link.closest('.service-card, .program-card');
+        const title = card ? (card.querySelector('.service-title') || card.querySelector('.program-card-title')).innerText : 'your services';
         link.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(baseMsg + "'" + title + "'.")}`;
         link.target = '_blank';
       });
+
+      // Update Modal WhatsApp link
+      const modalWa = document.getElementById('modal-whatsapp');
+      if (modalWa) {
+        modalWa.href = `https://wa.me/${waNumber}`;
+      }
 
       // Update CTA Banner button
       const ctaBanner = document.querySelector('#cta-banner .hero-cta');
@@ -81,7 +89,7 @@ function initThemeToggle() {
   });
 }
 
-// ── PRELOADER + GHOST INIT ────────────────────────
+// ── PRELOADER ─────────────────────────────────────
 function initPreloader() {
   const preloaderEl = document.getElementById('preloader');
   const heroText    = document.getElementById('hero-text-content');
@@ -95,15 +103,11 @@ function initPreloader() {
     if (progressBar) progressBar.style.width = ((step / totalSteps) * 100) + '%';
   }
 
-  function completePreloader(canvas) {
+  function completePreloader() {
     updateProgress(totalSteps);
     setTimeout(() => {
       if (preloaderEl) preloaderEl.classList.add('fade-out');
       if (heroText)    heroText.classList.add('visible');
-      if (canvas) {
-        canvas.style.transition = 'opacity 2s ease-in';
-        canvas.style.opacity    = '1';
-      }
       setTimeout(() => {
         if (preloaderEl) preloaderEl.style.display = 'none';
       }, 800);
@@ -112,7 +116,6 @@ function initPreloader() {
 
   updateProgress(1);
   
-  // Simulated loading steps for preloader
   let progress = 1;
   const interval = setInterval(() => {
     progress++;
@@ -135,10 +138,8 @@ function initVideo() {
     });
   };
 
-  // Try to play immediately
   playVideo();
 
-  // Force play on first interaction (fix for "rendering issue")
   const forcePlay = () => {
     playVideo();
     document.removeEventListener('click', forcePlay);
@@ -170,32 +171,77 @@ function initScrollReveal() {
   const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 }); // lower threshold for speed
+  }, { threshold: 0.1 });
   els.forEach(el => obs.observe(el));
 }
 
-// ── COUNT-UP ──────────────────────────────────────
-function initCountUp() {
-  function countUp(el) {
-    const target = parseInt(el.dataset.target);
-    const duration = 2000, step = 30; // faster
-    const increment = target / (duration / step);
-    let current = 0;
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= target) { current = target; clearInterval(timer); }
-      el.textContent = Math.round(current) + (target > 100 ? '+' : '');
-    }, step);
+// ── COUNT-UP & METRICS ─────────────────────────────
+function initMetrics() {
+  // Animate numbers
+  function animateValue(obj, start, end, duration, suffix = '') {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      // use ease out cubic
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      const current = progress === 1 ? end : start + (end - start) * easeProgress;
+      
+      // Check if the number has a decimal point
+      if (end % 1 !== 0) {
+        obj.textContent = current.toFixed(1) + suffix;
+      } else {
+        obj.textContent = Math.round(current) + suffix;
+      }
+      
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
   }
+
   const statObs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        e.target.querySelectorAll('[data-target]').forEach(countUp);
+        // Simple stats
+        e.target.querySelectorAll('[data-target]:not(.radial-num):not(.bar-fill)').forEach(el => {
+          const target = parseInt(el.dataset.target);
+          if (!isNaN(target)) animateValue(el, 0, target, 2000, target > 100 ? '+' : '');
+        });
+        
+        // Radial numbers
+        e.target.querySelectorAll('.radial-num').forEach(el => {
+          const target = parseFloat(el.dataset.target);
+          const suffix = el.dataset.suffix || '';
+          if (!isNaN(target)) animateValue(el, 0, target, 2000, suffix);
+        });
+
+        // Bar fill numbers
+        e.target.querySelectorAll('.bar-fill').forEach(el => {
+          const target = parseFloat(el.dataset.target);
+          const suffix = el.dataset.suffix || '';
+          if (!isNaN(target)) animateValue(el, 0, target, 2000, suffix);
+          
+          // Animate the bar width
+          setTimeout(() => { el.classList.add('animated'); }, 200);
+        });
+
+        // Radial rings
+        e.target.querySelectorAll('.radial-progress').forEach(circle => {
+          var targetOffset = parseFloat(circle.getAttribute('data-offset'));
+          circle.style.strokeDashoffset = '314'; // Reset to empty
+          setTimeout(() => {
+            circle.style.strokeDashoffset = targetOffset;
+          }, 100);
+        });
+
         statObs.unobserve(e.target);
       }
     });
   }, { threshold: 0.2 });
-  document.querySelectorAll('#stats').forEach(s => statObs.observe(s));
+  
+  document.querySelectorAll('#stats, #metrics').forEach(s => statObs.observe(s));
 }
 
 // ── SCROLL PROGRESS & ACTIVE TABS ─────────────────
@@ -228,3 +274,71 @@ function initScrollProgress() {
   });
 }
 
+// ── MODAL HANDLING ────────────────────────────────
+function initModal() {
+  const modal = document.getElementById('details-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalDesc = document.getElementById('modal-desc');
+  const modalWa = document.getElementById('modal-whatsapp');
+  const closeBtn = document.querySelector('.modal-close');
+  const closeBtnText = document.querySelector('.modal-close-btn');
+
+  if (!modal) return;
+
+  document.querySelectorAll('.learn-more-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const card = btn.closest('.service-card, .program-card');
+      const title = (card.querySelector('.service-title') || card.querySelector('.program-card-title')).innerText;
+      const details = card.getAttribute('data-details');
+      
+      modalTitle.innerText = title;
+      modalDesc.innerText = details;
+      
+      // Update modal WhatsApp link with context
+      fetch('data.json').then(res => res.json()).then(data => {
+        modalWa.href = `https://wa.me/${data.whatsapp.phoneNumber}?text=${encodeURIComponent(data.whatsapp.baseMessage + "'" + title + "'.")}`;
+      });
+
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      
+      // Add a small animation to the card when loading the modal
+      card.style.transform = 'scale(0.95)';
+      setTimeout(() => { card.style.transform = ''; }, 200);
+    });
+  });
+
+  const closeModal = () => {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (closeBtnText) closeBtnText.addEventListener('click', closeModal);
+  
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+  
+  // ESC key to close modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) {
+      closeModal();
+    }
+  });
+}
+// ── CARD EFFECTS ──────────────────────────────────
+function initCardEffects() {
+  const cards = document.querySelectorAll('.service-card');
+  cards.forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      card.style.setProperty('--mouse-x', `${x}%`);
+      card.style.setProperty('--mouse-y', `${y}%`);
+    });
+  });
+}

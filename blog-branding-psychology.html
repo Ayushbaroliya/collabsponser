@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
+
+  <!-- ── SEO ─────────────────────────────────────────────── -->
+  <link rel="icon" type="image/webp" href="assets/favicon.webp">
+  <title>The Psychology of Color in Agency Branding | CollabSponsor Blog</title>
+  <meta name="description" content="Explore how color choices influence brand perception and trust. A deep dive into the Jewel Tone aesthetic.">
+  
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .post-container { max-width: 900px; margin: 150px auto 100px; padding: 0 5%; }
+    .post-header { text-align: center; margin-bottom: 60px; }
+    .post-meta { display: flex; justify-content: center; gap: 20px; color: var(--text3); font-size: 14px; margin-bottom: 20px; }
+    .post-content { line-height: 1.8; color: var(--text2); font-size: 17px; }
+    .post-content h2 { color: var(--text); margin: 40px 0 20px; font-family: 'Cinzel', serif; }
+    .color-swatch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px 0; }
+    .swatch-card { padding: 25px; border-radius: 20px; border: 1px solid var(--border); text-align: center; }
+    .swatch-circle { width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 15px; border: 2px solid #fff; }
+    .post-cta-box { background: var(--bg2); border: 1px solid var(--border); padding: 40px; border-radius: 24px; text-align: center; margin-top: 60px; }
+    .featured-img-wrap { width: 100%; height: 450px; border-radius: 30px; overflow: hidden; margin-bottom: 50px; border: 1px solid var(--border); }
+    .featured-img { width: 100%; height: 100%; object-fit: cover; }
+    .back-to-blog { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); text-decoration: none; font-weight: 600; margin-bottom: 40px; transition: transform 0.3s; }
+    .back-to-blog:hover { transform: translateX(-5px); }
+  </style>
+</head>
+
+<body>
+  <div class="noise-overlay"></div>
+  <div class="mesh-gradient-bg"></div>
+
+  <nav id="main-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="assets/favicon.webp" alt="CollabSponsor Logo" class="logo-img">
+        CollabSponsor
+      </a>
+      <div class="nav-desktop">
+        <a href="index.html#works">Our Works</a>
+        <a href="index.html#services">Services</a>
+        <a href="blog.html" class="active">Blog</a>
+        <a href="index.html#programs">Programs</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+        <svg class="sun-icon" viewBox="0 0 24 24"><path d="M12 17c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2"/></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+    <div class="nav-menu" id="nav-menu">
+      <a href="index.html#works">Our Works</a>
+      <a href="index.html#services">Services</a>
+      <a href="blog.html">Blog</a>
+      <a href="index.html#programs">Programs</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="post-container">
+    <a href="blog.html" class="back-to-blog">← Back to Insights</a>
+    
+    <header class="post-header">
+      <div class="post-meta">
+        <span>April 28, 2026</span>
+        <span>•</span>
+        <span>7 Min Read</span>
+        <span>•</span>
+        <span>by Creative Studio</span>
+      </div>
+      <h1 class="section-title metallic-text">The Psychology of Color in <span style="color:var(--accent)">Premium Branding.</span></h1>
+    </header>
+
+    <div class="featured-img-wrap">
+        <img src="assets/brand_identity.webp" alt="Branding Strategy" class="featured-img">
+    </div>
+
+    <div class="post-content">
+      <p>Why do most tech giants use blue? Why do luxury brands lean into gold and deep reds? Branding isn't just about what looks "cool"—it's a calculated psychological trigger designed to influence how your audience feels about your business.</p>
+
+      <h2>1. The Rise of the "Jewel Tone" Aesthetic</h2>
+      <p>At CollabSponsor, we've pioneered a <strong>Jewel Tone Aesthetic</strong> for our digital interfaces. This involves using deep, saturated colors like Emerald, Ruby, and Sapphire against dark, high-contrast backgrounds. Why?</p>
+      
+      <p>Jewel tones are psychologically associated with <strong>wealth, stability, and premium quality.</strong> In a world of flat, generic white websites, these tones command attention and signal that your brand is high-end.</p>
+
+      <div class="color-swatch-grid">
+        <div class="swatch-card glass-card">
+          <div class="swatch-circle" style="background: #ff0055;"></div>
+          <p><strong>Ruby Red</strong><br>Energy, Passion, Urgency</p>
+        </div>
+        <div class="swatch-card glass-card">
+          <div class="swatch-circle" style="background: #00f2ff;"></div>
+          <p><strong>Electric Blue</strong><br>Trust, Innovation, Speed</p>
+        </div>
+        <div class="swatch-card glass-card">
+          <div class="swatch-circle" style="background: #a855f7;"></div>
+          <p><strong>Amethyst Purple</strong><br>Luxury, Creativity, Mystery</p>
+        </div>
+      </div>
+
+      <h2>2. Context Matters</h2>
+      <p>A color that works for a fitness gym in Vijay Nagar won't necessarily work for a luxury jewelry shop in South Avenue. You must align your palette with the <strong>emotional promise</strong> of your service.</p>
+      
+      <ul>
+        <li><strong>Red & Orange:</strong> Excellent for food and fitness (stimulates appetite and action).</li>
+        <li><strong>Green & Blue:</strong> Perfect for healthcare and finance (promotes calm and reliability).</li>
+        <li><strong>Black & Gold:</strong> The gold standard for ultra-luxury branding.</li>
+      </ul>
+
+      <div class="post-cta-box">
+        <h3 class="metallic-text" style="font-size: 28px; margin-bottom: 15px;">Does your brand tell the right story?</h3>
+        <p style="margin-bottom: 25px;">We don't just design logos; we engineer visual identities that build trust and drive premium revenue. Let's redefine your brand.</p>
+        <a href="https://wa.me/919109832579" target="_blank" class="hero-cta">Start Your Rebrand →</a>
+      </div>
+    </div>
+  </article>
+
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <span>© 2026 CollabSponsor. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

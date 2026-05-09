@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
+
+  <!-- ── SEO ─────────────────────────────────────────────── -->
+  <link rel="icon" type="image/webp" href="assets/favicon.webp">
+  <title>Meta Ads vs. Google Ads: Which is Right for You? | CollabSponsor Blog</title>
+  <meta name="description" content="A comparative guide to choosing between Meta (Facebook/Instagram) and Google Ads to maximize your marketing ROAS.">
+  
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .post-container { max-width: 900px; margin: 150px auto 100px; padding: 0 5%; }
+    .post-header { text-align: center; margin-bottom: 60px; }
+    .post-meta { display: flex; justify-content: center; gap: 20px; color: var(--text3); font-size: 14px; margin-bottom: 20px; }
+    .post-content { line-height: 1.8; color: var(--text2); font-size: 17px; }
+    .post-content h2 { color: var(--text); margin: 40px 0 20px; font-family: 'Cinzel', serif; }
+    .post-content blockquote { font-family: 'Cinzel', serif; font-size: 20px; color: var(--accent); border-left: 4px solid var(--accent); padding: 20px 30px; margin: 40px 0; background: rgba(255, 0, 85, 0.05); border-radius: 0 20px 20px 0; }
+    .takeaways-box { background: linear-gradient(135deg, rgba(255, 0, 85, 0.1), rgba(0, 242, 255, 0.05)); border: 1px solid var(--border); border-radius: 24px; padding: 30px; margin: 40px 0; }
+    .protip { background: rgba(0, 242, 255, 0.05); border: 1px solid rgba(0, 242, 255, 0.2); padding: 20px; border-radius: 15px; margin: 30px 0; display: flex; gap: 15px; align-items: flex-start; }
+    .comparison-table { width: 100%; border-collapse: collapse; margin: 30px 0; border: 1px solid var(--border); border-radius: 15px; overflow: hidden; }
+    .comparison-table th, .comparison-table td { padding: 15px; border: 1px solid var(--border); text-align: left; }
+    .comparison-table th { background: rgba(255, 255, 255, 0.05); color: var(--accent); font-family: 'Cinzel', serif; }
+    .post-cta-box { background: var(--bg2); border: 1px solid var(--border); padding: 40px; border-radius: 24px; text-align: center; margin-top: 60px; position: relative; overflow: hidden; }
+    .featured-img-wrap { width: 100%; height: 450px; border-radius: 30px; overflow: hidden; margin-bottom: 50px; border: 1px solid var(--border); }
+    .featured-img { width: 100%; height: 100%; object-fit: cover; }
+    .back-to-blog { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); text-decoration: none; font-weight: 600; margin-bottom: 40px; transition: transform 0.3s; }
+    .back-to-blog:hover { transform: translateX(-5px); }
+  </style>
+</head>
+
+<body>
+  <div class="noise-overlay"></div>
+  <div class="mesh-gradient-bg"></div>
+
+  <nav id="main-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="assets/favicon.webp" alt="CollabSponsor Logo" class="logo-img">
+        CollabSponsor
+      </a>
+      <div class="nav-desktop">
+        <a href="index.html#works">Our Works</a>
+        <a href="index.html#services">Services</a>
+        <a href="blog.html" class="active">Blog</a>
+        <a href="index.html#programs">Programs</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+        <svg class="sun-icon" viewBox="0 0 24 24"><path d="M12 17c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2"/></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+    <div class="nav-menu" id="nav-menu">
+      <a href="index.html#works">Our Works</a>
+      <a href="index.html#services">Services</a>
+      <a href="blog.html">Blog</a>
+      <a href="index.html#programs">Programs</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
+
+  <article class="post-container">
+    <a href="blog.html" class="back-to-blog">← Back to Insights</a>
+    
+    <header class="post-header">
+      <div class="post-meta">
+        <span>May 5, 2026</span>
+        <span>•</span>
+        <span>10 Min Read</span>
+        <span>•</span>
+        <span>by Strategy Team</span>
+      </div>
+      <h1 class="section-title metallic-text">Meta Ads vs. Google Ads: <span style="color:var(--accent)">ROAS Showdown.</span></h1>
+    </header>
+
+    <div class="featured-img-wrap">
+        <img src="assets/meta_ads.webp" alt="Ads Strategy" class="featured-img">
+    </div>
+
+    <div class="post-content">
+      <p>One of the most frequent questions we get from businesses in Jabalpur is: <em>"Should I put my money on Facebook/Instagram or Google Search?"</em> The answer isn't about which is "better," but which matches your customer's mindset.</p>
+
+      <div class="takeaways-box">
+        <h3 class="metallic-text">🚀 Quick Summary</h3>
+        <ul>
+          <li><strong>Google Ads:</strong> Capture "High-Intent" buyers who are actively searching for your service right now.</li>
+          <li><strong>Meta Ads:</strong> Perfect for "Discovery" and "Visual Appeal" to generate demand where none existed.</li>
+          <li><strong>Synergy:</strong> The highest ROAS usually comes from a hybrid strategy using both.</li>
+        </ul>
+      </div>
+
+      <h2>1. Intent vs. Discovery</h2>
+      <p>The fundamental difference lies in the user's intent. Google Ads is <strong>Demand Fulfillment</strong>. When someone searches for "best dentist in Jabalpur," they have a problem and need an immediate solution. You pay to be the answer.</p>
+      
+      <blockquote>
+        "Google is where you go when you know what you want. Meta is where you go when you don't know what you're missing."
+      </blockquote>
+
+      <p>Meta Ads (Facebook & Instagram) is <strong>Demand Generation</strong>. Users are scrolling to be entertained. Your ad must stop the scroll with powerful visuals and emotion. You aren't fulfilling a search; you're sparking an interest.</p>
+
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Google Ads</th>
+            <th>Meta Ads</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Primary Goal</td>
+            <td>Immediate Sales</td>
+            <td>Brand Awareness / Lead Gen</td>
+          </tr>
+          <tr>
+            <td>Targeting</td>
+            <td>Keywords / Intent</td>
+            <td>Interests / Behaviors</td>
+          </tr>
+          <tr>
+            <td>Ad Format</td>
+            <td>Text / Product Feed</td>
+            <td>Video / Images / Reels</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>2. Visual Branding in Jabalpur</h2>
+      <p>In a city like Jabalpur, lifestyle and visual brands (Cafes, Fashion, Real Estate) often thrive on Meta because the demographic is highly visual and community-driven. However, professional services (Lawyers, Clinics, B2B) see much higher conversion rates on Google Search.</p>
+
+      <div class="protip">
+        <div class="protip-icon">🎯</div>
+        <div>
+          <strong>Pro-Tip:</strong> Use Google Ads to capture the "Low Hanging Fruit" (people ready to buy) and Meta Ads for "Retargeting" (showing ads to people who visited your site but didn't buy yet).
+        </div>
+      </div>
+
+      <h2>3. Which one should you choose?</h2>
+      <p>If you have a limited budget and a service people search for daily, start with Google Search. If you have a new, innovative product or a lifestyle brand that requires storytelling, Meta Ads will scale you faster.</p>
+
+      <div class="post-cta-box">
+        <h3 class="metallic-text" style="font-size: 28px; margin-bottom: 15px;">Unsure where to invest?</h3>
+        <p style="margin-bottom: 25px;">Our experts analyze your industry data to build a custom ad strategy that maximizes every rupee. Stop guessing, start scaling.</p>
+        <a href="https://wa.me/919109832579" target="_blank" class="hero-cta">Get a Custom Ad Strategy →</a>
+      </div>
+    </div>
+  </article>
+
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <span>© 2026 CollabSponsor. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

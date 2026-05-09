@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
+
+  <!-- ── SEO ─────────────────────────────────────────────── -->
+  <link rel="icon" type="image/webp" href="assets/favicon.webp">
+  <title>Insights & Growth Blog | CollabSponsor Jabalpur</title>
+  <meta name="description" content="Expert insights on SEO, Digital Marketing, and Brand Growth from Jabalpur's leading agency. Scale your business with our data-driven strategies.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .blog-hero {
+      padding: 180px 5% 100px;
+      text-align: center;
+      background: radial-gradient(circle at 50% 0%, rgba(255, 0, 85, 0.1), transparent 50%);
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+      padding: 0 5% 100px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .blog-card {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .blog-card-img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .blog-card:hover .blog-card-img {
+      transform: scale(1.05);
+    }
+
+    .blog-card-content {
+      padding: 25px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-category {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .blog-card-title {
+      font-size: 22px;
+      margin-bottom: 15px;
+      line-height: 1.3;
+    }
+
+    .blog-card-excerpt {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .blog-card-footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text3);
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .read-more-link {
+      color: var(--accent);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .blog-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise-overlay"></div>
+  <div class="mesh-gradient-bg"></div>
+
+  <!-- ── NAV ───────────────────────────────────────────────── -->
+  <nav id="main-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="assets/favicon.webp" alt="CollabSponsor Logo" class="logo-img">
+        CollabSponsor
+      </a>
+      <div class="nav-desktop">
+        <a href="index.html#works">Our Works</a>
+        <a href="index.html#services">Services</a>
+        <a href="blog.html" class="active">Blog</a>
+        <a href="index.html#programs">Programs</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+        <svg class="sun-icon" viewBox="0 0 24 24"><path d="M12 17c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2"/></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+    <div class="nav-menu" id="nav-menu">
+      <a href="index.html#works">Our Works</a>
+      <a href="index.html#services">Services</a>
+      <a href="blog.html">Blog</a>
+      <a href="index.html#programs">Programs</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
+
+  <header class="blog-hero">
+    <div class="section-eyebrow" style="justify-content:center">Knowledge Hub</div>
+    <h1 class="section-title metallic-text">Insights for <span style="color:var(--accent)">Growth.</span></h1>
+    <p class="section-sub" style="margin: 0 auto;">Strategies, trends, and success stories from the front lines of digital marketing in Jabalpur.</p>
+  </header>
+
+  <main class="blog-grid">
+    <!-- Blog Card 1 -->
+    <a href="blog-local-seo-jabalpur.html" class="blog-card glass-card skeuo-btn">
+      <img src="assets/seo_optimization.webp" alt="Local SEO Jabalpur" class="blog-card-img">
+      <div class="blog-card-content">
+        <div class="blog-category">SEO Strategy</div>
+        <h2 class="blog-card-title metallic-text">How to Rank #1 for Local Keywords in Jabalpur</h2>
+        <p class="blog-card-excerpt">Discover the exact framework we use to help Jabalpur businesses dominate their local search results and drive 2x foot traffic.</p>
+        <div class="blog-card-footer">
+          <span>May 9, 2026</span>
+          <span class="read-more-link">Read Article →</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Blog Card 2 -->
+    <a href="blog-meta-vs-google-ads.html" class="blog-card glass-card skeuo-btn">
+      <img src="assets/meta_ads.webp" alt="Social Media Marketing" class="blog-card-img">
+      <div class="blog-card-content">
+        <div class="blog-category">Paid Ads</div>
+        <h2 class="blog-card-title metallic-text">Meta Ads vs. Google Ads: Which is right for you?</h2>
+        <p class="blog-card-excerpt">A comprehensive guide to choosing the right advertising platform based on your business goals, budget, and target audience.</p>
+        <div class="blog-card-footer">
+          <span>May 5, 2026</span>
+          <span class="read-more-link">Read Article →</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Blog Card 3 -->
+    <a href="blog-branding-psychology.html" class="blog-card glass-card skeuo-btn">
+      <img src="assets/brand_identity.webp" alt="Branding" class="blog-card-img">
+      <div class="blog-card-content">
+        <div class="blog-category">Branding</div>
+        <h2 class="blog-card-title metallic-text">The Psychology of Color in Modern Agency Branding</h2>
+        <p class="blog-card-excerpt">How choosing the right color palette can increase brand trust by up to 80%. Exploring the Jewel Tone aesthetic.</p>
+        <div class="blog-card-footer">
+          <span>April 28, 2026</span>
+          <span class="read-more-link">Read Article →</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Blog Card 4 -->
+    <a href="blog-influencer-marketing-roi.html" class="blog-card glass-card skeuo-btn">
+      <img src="assets/influencer_marketing.webp" alt="Influencer Marketing" class="blog-card-img">
+      <div class="blog-card-content">
+        <div class="blog-category">Influencer Marketing</div>
+        <h2 class="blog-card-title metallic-text">Influencer ROI: Beyond the Follower Count</h2>
+        <p class="blog-card-excerpt">How to choose the right creators and track campaign performance for maximum brand impact.</p>
+        <div class="blog-card-footer">
+          <span>May 12, 2026</span>
+          <span class="read-more-link">Read Article →</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Blog Card 5 -->
+    <a href="blog-why-static-sites-win.html" class="blog-card glass-card skeuo-btn">
+      <img src="assets/web_development.webp" alt="Web Development" class="blog-card-img">
+      <div class="blog-card-content">
+        <div class="blog-category">Web Dev</div>
+        <h2 class="blog-card-title metallic-text">Why Static Websites are the Future of Business</h2>
+        <p class="blog-card-excerpt">Discover the performance and security benefits of static site architecture for modern businesses.</p>
+        <div class="blog-card-footer">
+          <span>May 15, 2026</span>
+          <span class="read-more-link">Read Article →</span>
+        </div>
+      </div>
+    </a>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <span>© 2026 CollabSponsor. All rights reserved.</span>
+      <span style="color:var(--accent)">Engineered for Performance.</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

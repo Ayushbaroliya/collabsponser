@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://collabsponsor.com/sitemap.xml

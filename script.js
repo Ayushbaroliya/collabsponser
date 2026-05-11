@@ -64,9 +64,13 @@ function initDynamicData() {
       if (data.brands) {
         const marqueeContainer = document.getElementById('brand-marquee');
         if (marqueeContainer) {
+          const colors = ['#ff0055', '#00f2ff', '#a855f7', '#34d399', '#fbbf24', '#60a5fa', '#f472b6'];
           // Double the items for seamless looping
           const items = [...data.brands, ...data.brands];
-          marqueeContainer.innerHTML = items.map(brand => `<div class="marquee-item">${brand}</div>`).join('');
+          marqueeContainer.innerHTML = items.map((brand, index) => {
+            const color = colors[index % colors.length];
+            return `<div class="marquee-item" style="color: ${color}; text-shadow: 0 0 10px ${color}33;">${brand}</div>`;
+          }).join('');
         }
       }
     })

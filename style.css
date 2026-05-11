@@ -897,6 +897,7 @@ body {
   animation: marquee 30s linear infinite;
   gap: 80px;
   align-items: center;
+  will-change: transform;
 }
 
 .marquee-item {
@@ -1687,6 +1688,7 @@ section {
   gap: 24px;
   animation: scroll-left 40s linear infinite;
   width: max-content;
+  will-change: transform;
 }
 
 .test-track:hover {

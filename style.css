@@ -901,16 +901,14 @@ body {
 }
 
 .marquee-item {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  color: var(--text2);
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 800;
   font-family: 'Cinzel', serif;
-  font-weight: 700;
-  font-size: 20px;
-  opacity: 0.6;
-  transition: opacity 0.3s;
+  opacity: 0.95;
   white-space: nowrap;
+  transition: all 0.3s ease;
+  cursor: default;
+  user-select: none;
 }
 
 .marquee-item:hover {

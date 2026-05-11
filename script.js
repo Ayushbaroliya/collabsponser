@@ -74,7 +74,20 @@ function initDynamicData() {
         }
       }
     })
-    .catch(err => console.warn('Could not load data.json. Note: This feature requires a local server (e.g. Live Server) due to CORS:', err));
+    .catch(err => {
+      console.warn('Could not load data.json. Using fallback data:', err);
+      // Fallback brands list if fetch fails
+      const fallbackBrands = ["Mishra Eye Clinic", "E-With", "J.P CRICKET ACADEMY", "SHREE FITNESS GYM", "SHANKRI JEWELLERS", "Dr.Rupanshu Mishra"];
+      const marqueeContainer = document.getElementById('brand-marquee');
+      if (marqueeContainer) {
+        const colors = ['#ff0055', '#00f2ff', '#a855f7', '#34d399', '#fbbf24', '#60a5fa', '#f472b6'];
+        const items = [...fallbackBrands, ...fallbackBrands];
+        marqueeContainer.innerHTML = items.map((brand, index) => {
+          const color = colors[index % colors.length];
+          return `<div class="marquee-item" style="color: ${color}; text-shadow: 0 0 15px ${color}44;">${brand}</div>`;
+        }).join('');
+      }
+    });
 }
 
 // ── THEME TOGGLE ──────────────────────────────────

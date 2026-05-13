@@ -271,8 +271,8 @@ function initMetrics() {
 // ── SCROLL PROGRESS & ACTIVE TABS ─────────────────
 function initScrollProgress() {
   const scrollProgress = document.getElementById('scroll-progress');
-  const sections = document.querySelectorAll('section');
-  const navLinks = document.querySelectorAll('.nav-desktop a, .nav-menu a');
+  const sections = document.querySelectorAll('section, article h2[id]');
+  const navLinks = document.querySelectorAll('.nav-desktop a, .nav-menu a, .toc-link');
 
   let isScrolling = false;
   window.addEventListener('scroll', () => {
@@ -285,16 +285,19 @@ function initScrollProgress() {
         }
 
         let current = '';
+        const scrollPos = window.scrollY + 150; // Offset for better detection
+
         sections.forEach(section => {
           const sectionTop = section.offsetTop;
-          if (window.scrollY >= (sectionTop - 200)) {
+          if (scrollPos >= sectionTop) {
             current = section.getAttribute('id');
           }
         });
 
         navLinks.forEach(link => {
           link.classList.remove('active');
-          if (link.getAttribute('href') === `#${current}`) {
+          const href = link.getAttribute('href');
+          if (href === `#${current}` || (href && href.endsWith(`#${current}`))) {
             link.classList.add('active');
           }
         });
